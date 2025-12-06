@@ -1,11 +1,14 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Register = () => {
-  const { signInGoogle, registerUser } = useAuth();
+  const { signInGoogle, registerUser, updateUserProfile, user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
@@ -16,6 +19,7 @@ const Register = () => {
   const handleGoogleRegister = () => {
     signInGoogle()
       .then(() => {
+        navigate(location?.state || "/");
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -30,23 +34,55 @@ const Register = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    const imageFile = data.photo[0];
     registerUser(data.email, data.password)
       .then((res) => {
-        if (res.user) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Register successful",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+        console.log(res.user);
+
+        // create formData for axios
+
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        //  upload the image to imgbb via axios
+
+        const url = `https://api.imgbb.com/1/upload?&key=${
+          import.meta.env.VITE_image_host
+        }`;
+
+        axios.post(url, formData).then((res) => {
+          // updata the user profile
+
+          const userProfile = {
+            displayName: data.name,
+            photoURL: res.data.data.url,
+          };
+
+          updateUserProfile(userProfile)
+            .then(() => {
+              console.log("user Profile updated done");
+              navigate(location.state || "/");
+            })
+
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  console.log(user);
 
   return (
     <div>
@@ -127,8 +163,8 @@ const Register = () => {
               <input
                 {...register("photo", { required: true })}
                 name="photo"
-                type="text"
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                type="file"
+                className="file-input w-full rounded-lg"
                 placeholder=""
               />
               {errors.photo?.type === "required" && (

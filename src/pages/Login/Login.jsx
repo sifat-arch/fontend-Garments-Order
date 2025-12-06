@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const { signInGoogle } = useAuth();
+  const { signInGoogle, signInUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -16,6 +18,7 @@ const Login = () => {
   const handleGoogleRegister = () => {
     signInGoogle()
       .then(() => {
+        navigate(location?.state || "/");
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -31,6 +34,22 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    signInUser(data.email, data.password)
+      .then((res) => {
+        if (res.user) {
+          navigate(location?.state || "/");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login successful",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
