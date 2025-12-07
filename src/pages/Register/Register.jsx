@@ -4,11 +4,13 @@ import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
   const { signInGoogle, registerUser, updateUserProfile, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -20,6 +22,7 @@ const Register = () => {
     signInGoogle()
       .then(() => {
         navigate(location?.state || "/");
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -27,48 +30,64 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+
+        //  add to the databse
+        axiosSecure
+          .post("/users", {
+            name: user.displayName,
+            email: user.email,
+            role: "buyer",
+            photoURL: user.photoURL,
+          })
+          .then((res) => {
+            if (res.data.insertedId) {
+              console.log("user created in the database");
+            }
+          });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const onSubmit = (data) => {
-    const imageFile = data.photo[0];
-    registerUser(data.email, data.password)
-      .then((res) => {
-        console.log(res.user);
+  //  test 2
+  const onSubmit = async (data) => {
+    try {
+      const imageFile = data.photo[0];
 
-        // create formData for axios
+      //  Register user
+      const res = await registerUser(data.email, data.password);
+      console.log("User registered:", res.user);
 
-        const formData = new FormData();
-        formData.append("image", imageFile);
+      // Upload image
+      const formData = new FormData();
+      formData.append("image", imageFile);
 
-        //  upload the image to imgbb via axios
+      const url = `https://api.imgbb.com/1/upload?&key=${
+        import.meta.env.VITE_image_host
+      }`;
+      const imgRes = await axios.post(url, formData);
 
-        const url = `https://api.imgbb.com/1/upload?&key=${
-          import.meta.env.VITE_image_host
-        }`;
+      const photoURL = imgRes.data.data.url;
 
-        axios.post(url, formData).then((res) => {
-          // updata the user profile
+      // Update user profile (Firebase)
+      const userProfile = {
+        displayName: data.name,
+        photoURL: photoURL,
+      };
 
-          const userProfile = {
-            displayName: data.name,
-            photoURL: res.data.data.url,
-          };
+      await updateUserProfile(userProfile);
+      console.log("User profile updated");
 
-          updateUserProfile(userProfile)
-            .then(() => {
-              console.log("user Profile updated done");
-              navigate(location.state || "/");
-            })
+      // Save user to database
+      const dbRes = await axiosSecure.post("/users", {
+        name: data.name,
+        email: data.email,
+        role: data.role,
+        photoURL: photoURL,
+      });
 
-            .catch((err) => {
-              console.log(err);
-            });
-        });
-
+      if (dbRes.data.insertedId) {
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -76,14 +95,79 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+
+      // redirect
+      navigate(location.state || "/");
+    } catch (err) {
+      console.log("Error:", err);
+    }
   };
 
-  console.log(user);
+  // const onSubmit = (data) => {
+  //   const imageFile = data.photo[0];
+  //   registerUser(data.email, data.password)
+  //     .then((res) => {
+  //       console.log(res.user);
 
+  //       // create formData for axios
+
+  //       const formData = new FormData();
+  //       formData.append("image", imageFile);
+
+  //       //  upload the image to imgbb via axios
+
+  //       const url = `https://api.imgbb.com/1/upload?&key=${
+  //         import.meta.env.VITE_image_host
+  //       }`;
+
+  //       axios.post(url, formData).then((res) => {
+  //         // updata the user profile
+
+  //         const userProfile = {
+  //           displayName: data.name,
+  //           photoURL: res.data.data.url,
+  //         };
+
+  //         updateUserProfile(userProfile)
+  //           .then(() => {
+  //             console.log("user Profile updated done");
+  //             navigate(location.state || "/");
+  //           })
+
+  //           .catch((err) => {
+  //             console.log(err);
+  //           });
+  //       });
+
+  //       //  save/post users info in data base
+
+  //       axiosSecure
+  //         .post("/users", {
+  //           name: data.name,
+  //           email: data.email,
+  //           role: data.role,
+  //           photoURL: photoURL,
+  //         })
+  //         .then((res) => {
+  //           if (res.data.insertedId) {
+  //             console.log("user created in the database");
+  //             Swal.fire({
+  //               position: "top-end",
+  //               icon: "success",
+  //               title: "Register successful",
+  //               showConfirmButton: false,
+  //               timer: 1500,
+  //             });
+  //           }
+  //         });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  //
   return (
     <div>
       <h2>Register</h2>

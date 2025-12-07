@@ -8,7 +8,7 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink>All-Products</NavLink>
+        <NavLink to="/all-products">All-Products</NavLink>
       </li>
       <li>
         <NavLink>About Us</NavLink>
@@ -18,6 +18,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to="/register">Register</NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
     </>
   );
@@ -37,6 +40,8 @@ const Navbar = () => {
         console.log(err);
       });
   };
+  console.log(user);
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">

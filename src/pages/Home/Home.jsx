@@ -1,7 +1,15 @@
 import React from "react";
+import useAuth from "../../Hooks/useAuth";
 
 const Home = () => {
-  return <div>I am home page</div>;
+  const user = useAuth();
+  console.log(user);
+
+  return (
+    <div>
+      <h2>Home page</h2>
+    </div>
+  );
 };
 
 export default Home;
