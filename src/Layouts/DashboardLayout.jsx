@@ -21,6 +21,35 @@ const DashboardLayout = () => {
             <Link className="hover:text-blue-600" to="/dashboard/all-products">
               All Products
             </Link>
+            <Link className="hover:text-blue-600" to="/dashboard/all-orders">
+              All Orders
+            </Link>
+            <Link className="hover:text-blue-600" to="/dashboard/add-products">
+              Add Products
+            </Link>
+
+            <Link
+              className="hover:text-blue-600"
+              to="/dashboard/manage-products"
+            >
+              Manage Products
+            </Link>
+
+            <Link
+              className="hover:text-blue-600"
+              to="/dashboard/pending-orders"
+            >
+              Pending Orders
+            </Link>
+            <Link
+              className="hover:text-blue-600"
+              to="/dashboard/approved-orders"
+            >
+              Approved Orders
+            </Link>
+            <Link className="hover:text-blue-600" to="/dashboard/my-profile">
+              My Profile
+            </Link>
           </nav>
         </aside>
 

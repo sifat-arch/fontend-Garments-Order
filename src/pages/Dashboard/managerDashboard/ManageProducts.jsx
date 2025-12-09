@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-
-const AllProductsAD = () => {
+const ManageProducts = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const [searchText, setSearch] = useState("");
   const { data: products = [], refetch } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", searchText],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/products`);
+      const res = await axiosSecure.get(`/products?searchText=${searchText}`);
+
       return res.data;
     },
   });
-
   const handleUpdate = (product) => {
     navigate("/dashboard/update-product", { state: { product } });
   };
@@ -44,69 +44,75 @@ const AllProductsAD = () => {
     });
   };
 
-  const handleToggle = async (id, value) => {
-    try {
-      await axiosSecure.patch(`/products/home-toggle/${id}`, {
-        showOnHome: value,
-      });
-
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <div>
-      <h2>All Product admin:{products.length}</h2>
-
+      <h2>manage products:{products.length}</h2>d{/* search input */}
+      <label className="input">
+        <svg
+          className="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input
+          type="search"
+          onChange={(e) => setSearch(e.target.value)}
+          required
+          placeholder="Search"
+        />
+      </label>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
               <th>No</th>
+              <th>Image</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Category</th>
-              <th>Created By</th>
-              <th>Actions</th>
+              <th>Payment Method</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            {products.map((product, i) => {
+            {products?.map((product, i) => {
               return (
                 <tr key={i}>
-                  <td>{i + 1}</td>
+                  <th>{i + 1}</th>
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
                           <img
-                            src={product.photo}
+                            src={product.image}
                             alt="Avatar Tailwind CSS Component"
                           />
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{product.productTitle}</div>
-                      </div>
                     </div>
                   </td>
                   <td>
-                    <span className="badge badge-ghost badge-sm">
-                      {product.pricePerUnit}
-                    </span>
+                    {product.productTitle}
+                    <br />
                   </td>
-                  <td>{product.category}</td>
-                  <th>{product.firstName}</th>
-                  <th className="flex gap-2">
+                  <td>{product.price}</td>
+                  <td>{product.paymentOptions}</td>
+                  <td>
                     <button
                       className="btn"
                       onClick={() => handleUpdate(product)}
                     >
-                      Update
+                      Updata
                     </button>
                     <button
                       className="btn"
@@ -114,18 +120,7 @@ const AllProductsAD = () => {
                     >
                       Delete
                     </button>
-
-                    <span className="flex items-center">
-                      <input
-                        type="checkbox"
-                        defaultChecked
-                        className="checkbox checkbox-xl"
-                        onChange={(e) =>
-                          handleToggle(product._id, e.target.checked)
-                        }
-                      />
-                    </span>
-                  </th>
+                  </td>
                 </tr>
               );
             })}
@@ -136,4 +131,4 @@ const AllProductsAD = () => {
   );
 };
 
-export default AllProductsAD;
+export default ManageProducts;

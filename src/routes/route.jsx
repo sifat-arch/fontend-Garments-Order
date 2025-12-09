@@ -15,6 +15,15 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Myorders from "../pages/Dashboard/Myorders";
 import ManageUsers from "../pages/Dashboard/adminDashboard/ManageUsers";
 import AllProductsAD from "../pages/Dashboard/adminDashboard/AllProductsAD";
+import ProductUpdate from "../pages/sidepages/ProductUpdate";
+import AllOrders from "../pages/Dashboard/adminDashboard/AllOrders";
+import OrderDetails from "../pages/sidepages/OrderDetails";
+import AddProduct from "../pages/Dashboard/managerDashboard/AddProduct";
+import ManageProducts from "../pages/Dashboard/managerDashboard/ManageProducts";
+import PendingOrders from "../pages/Dashboard/managerDashboard/PendingOrders";
+import ApprovedOrders from "../pages/Dashboard/managerDashboard/ApprovedOrders";
+import ViewTracking from "../pages/sidepages/ViewTracking";
+import MyProfile from "../pages/Dashboard/managerDashboard/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +89,7 @@ const router = createBrowserRouter([
         path: "my-orders",
         element: <Myorders />,
       },
+      // admin only routes
       {
         path: "manage-users",
         element: <ManageUsers />,
@@ -87,6 +97,45 @@ const router = createBrowserRouter([
       {
         path: "all-products",
         element: <AllProductsAD />,
+      },
+      {
+        path: "all-orders",
+        element: <AllOrders />,
+      },
+      {
+        path: "update-product",
+        element: <ProductUpdate />,
+      },
+      {
+        path: "order-details",
+        element: <OrderDetails />,
+      },
+
+      // manager only routes
+
+      {
+        path: "add-products",
+        element: <AddProduct />,
+      },
+      {
+        path: "manage-products",
+        element: <ManageProducts />,
+      },
+      {
+        path: "pending-orders",
+        element: <PendingOrders />,
+      },
+      {
+        path: "Approved-orders",
+        element: <ApprovedOrders />,
+      },
+      {
+        path: "view-trackings",
+        element: <ViewTracking />,
+      },
+      {
+        path: "my-profile",
+        element: <MyProfile />,
       },
     ],
   },

@@ -113,6 +113,7 @@ const OrderForm = () => {
         orderQuantity: data.orderQuantity,
         productId: productData._id,
         email: user.email,
+        user: user?.displayName,
       };
 
       // 2️⃣ Call backend → create Stripe checkout
@@ -306,18 +307,17 @@ const OrderForm = () => {
           />
         </div>
 
-        {productData.paymentStatus === "paid" ? (
+        {productData.paymentMethod === "op" ? (
           <button
-            type="button"
-            disabled
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 "
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           >
-            {" "}
-            order placed{" "}
+            Place Order
           </button>
         ) : (
           <button
             type="submit"
+            disabled
             className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           >
             Place Order
