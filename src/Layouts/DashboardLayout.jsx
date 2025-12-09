@@ -23,7 +23,7 @@ const DashboardLayout = () => {
             </Link>
             <Link className="hover:text-blue-600" to="/dashboard/all-orders">
               All Orders
-            </Link>
+          </Link>
             <Link className="hover:text-blue-600" to="/dashboard/add-products">
               Add Products
             </Link>

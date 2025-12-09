@@ -40,7 +40,7 @@ const Navbar = () => {
         console.log(err);
       });
   };
-  console.log(user);
+
 
   return (
     <div>

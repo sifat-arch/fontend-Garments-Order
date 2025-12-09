@@ -12,7 +12,7 @@ import Booking from "../pages/Booking/Booking";
 import PaymentSuccess from "../pages/Pyements/PaymentSuccess";
 import PaymentCancel from "../pages/Pyements/paymentCancel";
 import DashboardLayout from "../Layouts/DashboardLayout";
-import Myorders from "../pages/Dashboard/Myorders";
+
 import ManageUsers from "../pages/Dashboard/adminDashboard/ManageUsers";
 import AllProductsAD from "../pages/Dashboard/adminDashboard/AllProductsAD";
 import ProductUpdate from "../pages/sidepages/ProductUpdate";
@@ -24,6 +24,7 @@ import PendingOrders from "../pages/Dashboard/managerDashboard/PendingOrders";
 import ApprovedOrders from "../pages/Dashboard/managerDashboard/ApprovedOrders";
 import ViewTracking from "../pages/sidepages/ViewTracking";
 import MyProfile from "../pages/Dashboard/managerDashboard/MyProfile";
+import MyOrders from "../pages/Dashboard/BuyerDashboard/Myorders";
 
 const router = createBrowserRouter([
   {
@@ -87,7 +88,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "my-orders",
-        element: <Myorders />,
+        element: <MyOrders />,
       },
       // admin only routes
       {
