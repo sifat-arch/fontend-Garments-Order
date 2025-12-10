@@ -150,7 +150,7 @@ const ApprovedOrders = () => {
                       </div>
                     </dialog>
 
-                    <Link className="btn" to="/dashboard/view-trackings">
+                    <Link className="btn" to="/dashboard/order-details">
                       View Tracking
                     </Link>
                   </td>

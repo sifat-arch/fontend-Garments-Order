@@ -25,6 +25,8 @@ import ApprovedOrders from "../pages/Dashboard/managerDashboard/ApprovedOrders";
 import ViewTracking from "../pages/sidepages/ViewTracking";
 import MyProfile from "../pages/Dashboard/managerDashboard/MyProfile";
 import MyOrders from "../pages/Dashboard/BuyerDashboard/Myorders";
+import TrackOrder from "../pages/Dashboard/BuyerDashboard/TrackOrder";
+import Profile from "../pages/Dashboard/BuyerDashboard/Profile";
 
 const router = createBrowserRouter([
   {
@@ -137,6 +139,14 @@ const router = createBrowserRouter([
       {
         path: "my-profile",
         element: <MyProfile />,
+      },
+      {
+        path: "track-order",
+        element: <TrackOrder />,
+      },
+      {
+        path: "buyer-profile",
+        element: <Profile />,
       },
     ],
   },

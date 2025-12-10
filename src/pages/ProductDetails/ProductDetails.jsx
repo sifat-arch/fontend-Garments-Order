@@ -17,6 +17,8 @@ const ProductDetails = () => {
     },
   });
 
+  console.log(product);
+
   return (
     <div>
       <h2>Product details: {}</h2>
@@ -27,27 +29,20 @@ const ProductDetails = () => {
           <div className="space-y-4">
             <img src={product.photo} className="w-full rounded-2xl shadow" />
 
-            {product.demoVideo && (
+            {/* {product.demoVideo && (
               <video controls className="w-full rounded-2xl shadow">
                 <source src={product.demoVideo} type="video/mp4" />
               </video>
-            )}
+            )} */}
 
             <div className="flex gap-3 overflow-x-auto">
-              {product.images?.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt="thumb"
-                  className="w-24 h-24 rounded-xl shadow"
-                />
-              ))}
+              <img src={product.image} alt="" />
             </div>
           </div>
 
           {/* Product Info */}
           <div className="space-y-4">
-            <h1 className="text-3xl font-bold">{product.title}</h1>
+            <h1 className="text-3xl font-bold">{product.productTitle}</h1>
             <p className="text-gray-700 leading-relaxed">
               {product.description}
             </p>
@@ -55,35 +50,25 @@ const ProductDetails = () => {
             <div className="space-y-2">
               <p>
                 <span className="font-semibold">Category:</span>{" "}
-                {product.orderQuantity}
+                {product.category}
               </p>
               <p>
-                <span className="font-semibold">Price:</span> $
-                {product.orderPrice}
+                <span className="font-semibold">Price:</span> ${product.price}
               </p>
               <p>
                 <span className="font-semibold">Available Quantity:</span>{" "}
-                {product.maxQuantity}
+                {product.availableQuantity}
               </p>
               <p>
                 <span className="font-semibold">Minimum Order:</span>{" "}
-                {product.minQuantity}
+                {product.minimumOrderQuantity}
               </p>
             </div>
 
             {/* Payment Options */}
-            <div className="mt-4">
+            <div className="mt-4 flex gap-2">
               <h2 className="font-semibold mb-2">Payment Options:</h2>
-              <div className="flex flex-wrap gap-2">
-                {product.paymentOptions?.map((opt, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1 bg-gray-200 rounded-full text-sm"
-                  >
-                    {opt}
-                  </span>
-                ))}
-              </div>
+              <span>{product.paymentOptions}</span>
             </div>
 
             {/* Order Button */}

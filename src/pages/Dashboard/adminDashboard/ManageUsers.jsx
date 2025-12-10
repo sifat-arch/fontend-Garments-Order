@@ -3,125 +3,29 @@ import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 
-// const ManageUsers = () => {
-//   const axiosSecure = useAxiosSecure();
-//   const [selectedUser, setSelectedUser] = useState(null);
-//   const suspendRef = useRef();
-
-//   const { data: users = [] } = useQuery({
-//     queryKey: ["products"],
-//     queryFn: async () => {
-//       const res = await axiosSecure.get(`/users`);
-
-//       return res.data;
-//     },
-//   });
-
-//   const { register, handleSubmit } = useForm();
-
-//   const handleSuspend = (user) => {
-//     setSelectedUser(user);
-//     suspendRef.current.showModal();
-//   };
-
-//   const onSuspendSubmit = async (data) => {
-//     await axiosSecure.patch(`/users/suspend/${selectedUser._id}`, {
-//       reason: data.reason,
-//       feedback: data.feedback,
-//     });
-
-//     suspendRef.current.close();
-//   };
-
-//   return (
-//     <div>
-//       <h2>manage users : {users.length}</h2>
-
-//       <div className="overflow-x-auto">
-//         <table className="table table-zebra">
-//           {/* head */}
-//           <thead>
-//             <tr>
-//               <th></th>
-//               <th>Name</th>
-//               <th>Email</th>
-//               <th>Role</th>
-//               <th>Actions</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {/* row 1 */}
-//             {users.map((user, i) => {
-//               return (
-//                 <tr key={i}>
-//                   <th>{i + 1}</th>
-//                   <td>{user.name}</td>
-//                   <td>{user.email}</td>
-//                   <td>{user.role}</td>
-//                   <td>
-//                     <button className="btn" onClick={() => handleSuspend(user)}>
-//                       suspend
-//                     </button>
-
-//                     {/* Open the modal using document.getElementById('ID').showModal() method */}
-
-//                     <dialog ref={suspendRef} id="my_modal_1" className="modal">
-//                       <div className="modal-box">
-//                         <h3 className="font-bold text-lg">Hello!</h3>
-//                         <p className="py-4">
-//                           <form
-//                             className="space-y-4"
-//                             onSubmit={handleSubmit(onSuspendSubmit)}
-//                           >
-//                             <input
-//                               type="text"
-//                               {...register("reason")}
-//                               placeholder="Type here"
-//                               className="input w-full"
-//                             />
-
-//                             <textarea
-//                               placeholder="Bio"
-//                               {...register("feedback")}
-//                               className="textarea textarea-lg w-full"
-//                             ></textarea>
-
-//                             <button className="btn w-full">Suspend User</button>
-//                           </form>
-//                         </p>
-//                         <div className="modal-action">
-//                           <form method="dialog">
-//                             <button className="btn">Close</button>
-//                           </form>
-//                         </div>
-//                       </div>
-//                     </dialog>
-//                   </td>
-//                 </tr>
-//               );
-//             })}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ManageUsers;
-
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const [searchText, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const suspendRef = useRef();
   const { register, handleSubmit } = useForm();
-
   const { data: users = [] } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["products", searchText],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users`);
+      const res = await axiosSecure.get(`/users?searchText=${searchText}`);
+
       return res.data;
     },
   });
+
+  // const { data: users = [] } = useQuery({
+  //   queryKey: ["users", selectedUser],
+
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(`/users`);
+  //     return res?.data;
+  //   },
+  // });
 
   const handleSuspend = (user) => {
     setSelectedUser(user);
@@ -138,9 +42,55 @@ const ManageUsers = () => {
     suspendRef.current.close();
   };
 
+  const handleApproveRole = async (id) => {
+    const res = await axiosSecure.patch(`/users/approveRole/${id}`);
+
+    if (res.data.modifiedCount) {
+      alert("manager approuped");
+    }
+  };
+
+  const handleUpdateChange = async (e, id) => {
+    const value = e.target.value;
+    console.log(id, value);
+
+    const res = await axiosSecure.patch(`/users/approveRole/${id}`, {
+      role: value,
+    });
+
+    if (res.data.modifiedCount) {
+      alert("Manager approved");
+    }
+  };
   return (
     <div>
       <h2>manage users : {users.length}</h2>
+
+      {/* search */}
+      <label className="input">
+        <svg
+          className="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input
+          type="search"
+          onChange={(e) => setSearch(e.target.value)}
+          required
+          placeholder="Search"
+        />
+      </label>
 
       {/* Modal should be outside table */}
       <dialog ref={suspendRef} className="modal">
@@ -178,23 +128,40 @@ const ManageUsers = () => {
         <table className="table table-zebra">
           <thead>
             <tr>
-              <th></th>
+              <th>No</th>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {users.map((user, i) => (
+            {users?.map((user, i) => (
               <tr key={i}>
                 <th>{i + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
+                <td>{user.status}</td>
+                <td className="flex">
+                  <select
+                    defaultValue="Pick a color"
+                    className="select"
+                    onChange={(e) => handleUpdateChange(e, user._id)}
+                  >
+                    <option disabled={true}>Update</option>
+                    <option value="manager">Manager</option>
+                    <option value={"buyer"}>Buyer</option>
+                  </select>
+                  <button
+                    className="btn"
+                    onClick={() => handleApproveRole(user._id)}
+                  >
+                    Approve
+                  </button>
 
-                <td>
                   <button className="btn" onClick={() => handleSuspend(user)}>
                     suspend
                   </button>

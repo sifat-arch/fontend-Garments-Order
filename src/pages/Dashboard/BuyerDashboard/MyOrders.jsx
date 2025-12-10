@@ -3,38 +3,45 @@ import React from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import useAuth from "../../../Hooks/useAuth";
 
 const MyOrders = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: orders = [] } = useQuery({
-    queryKey: ["orders"],
+  const { user } = useAuth();
+  const { data: orders = [], refetch } = useQuery({
+    queryKey: ["orders", user],
     queryFn: async () => {
-      const res = await axiosSecure.get("/orders");
+      const res = await axiosSecure.get(`/orders?email=${user?.email}`);
 
       return res.data;
     },
   });
+  console.log(orders);
 
-  const updateTheData = async (id, updateFor) => {
-    console.log(id, updateFor);
-
-    const res = await axiosSecure.patch(`/orders/${id}`, { status: updateFor });
-    if (res.data.modifiedCount > 0) {
-      Swal.fire({
-        icon: "success",
-        title: `Order ${updateFor}`,
-        text: `The order has been ${updateFor} successfully`,
-        timer: 1500,
-        showConfirmButton: false,
+  const handleCancelOrder = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      axiosSecure.patch(`/orders/cancel/${id}`).then((res) => {
+        if (res.data.modifiedCount) {
+          if (result.isConfirmed) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your order has been canceled.",
+              icon: "success",
+            });
+          }
+        }
       });
-    }
-  };
-
-  const handleApprove = (id) => {
-    updateTheData(id, "approved");
-  };
-  const handleReject = (id) => {
-    updateTheData(id, "rejected");
+    });
   };
   return (
     <div>
@@ -48,8 +55,8 @@ const MyOrders = () => {
               <th>Order ID </th>
               <th>User </th>
               <th>Product </th>
-              <th>Quantity </th>
-              <th>Order Date </th>
+              <th>status</th>
+              <th>payment</th>
               <th>Actions </th>
             </tr>
           </thead>
@@ -61,24 +68,18 @@ const MyOrders = () => {
                   <td>{order._id}</td>
                   <td>{order.user}</td>
                   <td>{order.product}</td>
-                  <td>{order.orderQuantity}</td>
+                  <td>{order.status}</td>
                   <td>{order.createdAt}</td>
                   <td>
-                    <button
-                      className="btn"
-                      onClick={() => handleApprove(order._id)}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="btn"
-                      onClick={() => handleReject(order._id)}
-                    >
-                      Reject
-                    </button>
                     <Link className="btn" to="/dashboard/order-details">
                       View
                     </Link>
+                    <button
+                      className="btn"
+                      onClick={() => handleCancelOrder(order._id)}
+                    >
+                      Cancel Order
+                    </button>
                   </td>
                 </tr>
               );

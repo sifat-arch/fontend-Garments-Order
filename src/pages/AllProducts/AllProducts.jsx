@@ -8,7 +8,7 @@ const AllProducts = () => {
   const axiosIn = useAxios();
 
   const { data: products = [] } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products" ],
     queryFn: async () => {
       const res = await axiosIn.get("/products");
 

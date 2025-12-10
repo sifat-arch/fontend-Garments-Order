@@ -12,9 +12,7 @@ const DashboardLayout = () => {
             <Link className="hover:text-blue-600" to="/">
               Home
             </Link>
-            <Link className="hover:text-blue-600" to="/dashboard/my-orders">
-              My-Orders
-            </Link>
+
             <Link className="hover:text-blue-600" to="/dashboard/manage-users">
               manage-users
             </Link>
@@ -23,7 +21,7 @@ const DashboardLayout = () => {
             </Link>
             <Link className="hover:text-blue-600" to="/dashboard/all-orders">
               All Orders
-          </Link>
+            </Link>
             <Link className="hover:text-blue-600" to="/dashboard/add-products">
               Add Products
             </Link>
@@ -49,6 +47,16 @@ const DashboardLayout = () => {
             </Link>
             <Link className="hover:text-blue-600" to="/dashboard/my-profile">
               My Profile
+            </Link>
+            {/* buyer Route */}
+            <Link className="hover:text-blue-600" to="/dashboard/my-orders">
+              My Orders
+            </Link>
+            <Link className="hover:text-blue-600" to="/dashboard/track-order">
+              Track Orders
+            </Link>
+            <Link className="hover:text-blue-600" to="/dashboard/buyer-profile">
+              Profile
             </Link>
           </nav>
         </aside>

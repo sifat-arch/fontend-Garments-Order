@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 
 const ProductCard = (product) => {
-  const { productTitle, pricePerUnit, orderPrice, photo, orderQuantity, _id } =
+  const { productTitle, price, orderPrice, image, availableQuantity, _id } =
     product.product;
 
   return (
@@ -21,7 +21,7 @@ const ProductCard = (product) => {
             {/* Note: In a real app, you would import and use a specific image component/tag. 
                Since I cannot use the exact image, I'm using a placeholder logic for positioning. */}
             <img
-              src={photo}
+              src={image}
               alt="Nike Running Shoe"
               className="w-3/4 max-h-40 object-contain rotate-[-5deg] transform hover:scale-105 transition-transform duration-500"
             />
@@ -37,10 +37,10 @@ const ProductCard = (product) => {
           {/* Tags/Sizes */}
           <div className="flex space-x-2 mb-4">
             <span className="bg-gray-200 text-gray-800 text-xs font-medium px-2 py-1 rounded">
-              {orderQuantity}
+              {availableQuantity}
             </span>
             <span className="bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded">
-              {pricePerUnit}
+              {price}
             </span>
           </div>
 

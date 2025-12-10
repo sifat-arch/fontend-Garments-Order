@@ -4,6 +4,7 @@ import useAuth from "../../Hooks/useAuth";
 import { useNavigate, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const OrderForm = () => {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ const OrderForm = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/products/${id}`);
-
       return res.data;
     },
   });
@@ -43,23 +43,23 @@ const OrderForm = () => {
   });
 
   const [orderPrice, setOrderPrice] = useState(
-    productData?.pricePerUnit * productData?.minQuantity
+    productData?.price * productData?.minimumOrderQuantity
   );
 
   const quantity = watch("orderQuantity");
 
   useEffect(() => {
     if (quantity) {
-      setOrderPrice(quantity * productData?.pricePerUnit);
+      setOrderPrice(quantity * productData?.price);
     }
-  }, [quantity, productData?.pricePerUnit]);
+  }, [quantity, productData?.price]);
 
   useEffect(() => {
     if (user && productData) {
       reset({
         email: user.email || "",
         productTitle: productData.productTitle || "",
-        pricePerUnit: productData.pricePerUnit || 0,
+        pricePerUnit: productData.price || 0,
         firstName: user.firstName || "",
         lastName: user.lastName || "",
         orderQuantity: productData.minQuantity || 1,
@@ -68,261 +68,219 @@ const OrderForm = () => {
         notes: "",
       });
 
-      setOrderPrice(
-        (productData.pricePerUnit || 0) * (productData.minQuantity || 1)
-      );
+      // setOrderPrice(
+      //   (productData.pricePerUnit || 0) * (productData.minQuantity || 1)
+      // );
     }
   }, [user, productData, reset]);
 
   const onSubmit = async (data) => {
-    console.log("data", data);
-    // if (productData.paymentMethod === "op") {
-    //   const paymentInfo = {
-    //     orderPrice: productData.orderPrice,
-    //     productTitle: productData.productTitle,
-    //     orderQuantity: productData.orderQuantity,
-    //     productId: productData._id,
-    //     email: user.email,
-    //   };
+    const finalOrderPrice = data.orderQuantity * productData.price;
+    setOrderPrice(finalOrderPrice);
 
-    //   const res = await axiosSecure.post(
-    //     "/payment-checkout-session",
-    //     paymentInfo
-    //   );
-    //   console.log(res.data.url);
-    //   window.location.href = res.data.url;
-    // }
-    // if (productData.paymentStatus === "paid") {
-    //   axiosSecure.post("/orders", data).then((res) => {
-    //     console.log(res.data);
-    //   });
-    // } else {
-    //   axiosSecure.post("/orders", data).then((res) => {
-    //     console.log(res.data);
-    //   });
-    // }
-    // Calculate order price manually again (safe)
-    const finalOrderPrice = data.orderQuantity * productData.pricePerUnit;
-
-    // Payment Method: OP (Online Payment)
-    if (productData.paymentMethod === "op") {
-      // 1️⃣ Create Payment Info for Stripe
+    if (productData.paymentOptions === "online") {
       const paymentInfo = {
-        orderPrice: finalOrderPrice,
-        productTitle: productData.title,
+        orderPrice: orderPrice,
+        productTitle: productData.productTitle,
         orderQuantity: data.orderQuantity,
         productId: productData._id,
         email: user.email,
         user: user?.displayName,
       };
 
-      // 2️⃣ Call backend → create Stripe checkout
+      console.log("paymentinfo", paymentInfo);
+
       const res = await axiosSecure.post(
         "/payment-checkout-session",
         paymentInfo
       );
 
-      // 3️⃣ Redirect to Stripe
       window.location.href = res.data.url;
-      return; // 🚫 Stop further execution
+
+      return;
     }
 
-    // Payment Method: COD
-    if (productData.paymentMethod === "cod") {
+    if (productData.paymentOptions === "cod") {
       const orderData = {
-        ...data,
-        orderPrice: finalOrderPrice,
-        productId: productData._id,
+        orderPrice: Number(finalOrderPrice),
+        productTitle: String(productData.productTitle),
+        orderQuantity: Number(data.orderQuantity),
+        productId: String(productData._id),
+        email: String(user?.email),
+        user: String(user?.displayName || ""),
         paymentStatus: "unpaid",
       };
 
       const res = await axiosSecure.post("/orders", orderData);
-      console.log("COD Order Saved:", res.data);
-      if (res.data.success) {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your order has been placed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate("/dashboard/my-orders");
       }
-
-      // redirect to My Orders page if needed
     }
   };
 
-  console.log(productData.paymentStatus);
-
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-semibold mb-4">Place Your Order</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Product Image */}
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-2xl mt-10">
+      {" "}
+      <h2 className="text-3xl font-semibold mb-6 text-center">
+        Place Your Order
+      </h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        {" "}
         {productData.photo && (
-          <div className="flex justify-center mb-4">
+          <div className="md:col-span-2 flex justify-center mb-4">
             <img
               src={productData.photo}
               alt={productData.title}
-              className="h-32 w-32 object-cover rounded"
+              className="h-40 w-40 object-cover rounded-xl shadow"
             />
           </div>
         )}
+        <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border">
+          {" "}
+          <h3 className="text-lg font-medium mb-2">Product Details</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium">Email</label>
+              <input
+                type="email"
+                readOnly
+                {...register("email")}
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+              />
+            </div>
 
-        {/* Read-only fields */}
-        <div>
-          <label className="block font-medium">Email</label>
-          <input
-            type="email"
-            readOnly
-            {...register("email")}
-            className="w-full border rounded px-3 py-2 bg-gray-100"
-          />
+            <div>
+              <label className="block text-sm font-medium">Product Title</label>
+              <input
+                type="text"
+                readOnly
+                {...register("productTitle")}
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium">Price / Unit</label>
+              <input
+                type="text"
+                readOnly
+                value={`$${productData.price}`}
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+              />
+            </div>
+          </div>
         </div>
-
-        <div>
-          <label className="block font-medium">Product Title</label>
-          <input
-            type="text"
-            readOnly
-            {...register("productTitle")}
-            className="w-full border rounded px-3 py-2 bg-gray-100"
-          />
-        </div>
-
-        <div>
-          <label className="block font-medium">Price per Unit</label>
-          <input
-            type="text"
-            readOnly
-            value={`$${productData.pricePerUnit}`}
-            className="w-full border rounded px-3 py-2 bg-gray-100"
-          />
-        </div>
-
-        {/* Editable fields */}
-        <div>
-          <label className="block font-medium">First Name</label>
+        <div className="bg-gray-50 p-4 rounded-xl border">
+          {" "}
+          <h3 className="text-lg font-medium mb-3">Your Information</h3>
+          <label className="block text-sm font-medium">First Name</label>
           <input
             type="text"
             {...register("firstName", { required: "First name is required" })}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2 mb-2"
           />
           {errors.firstName && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.firstName.message}
-            </p>
+            <p className="text-red-500 text-xs">{errors.firstName.message}</p>
           )}
-        </div>
-
-        <div>
-          <label className="block font-medium">Last Name</label>
+          <label className="block text-sm font-medium">Last Name</label>
           <input
             type="text"
             {...register("lastName", { required: "Last name is required" })}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2"
           />
           {errors.lastName && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.lastName.message}
-            </p>
+            <p className="text-red-500 text-xs">{errors.lastName.message}</p>
           )}
         </div>
-
-        <div>
-          <label className="block font-medium">Order Quantity</label>
+        <div className="bg-gray-50 p-4 rounded-xl border">
+          {" "}
+          <h3 className="text-lg font-medium mb-3">Order Information</h3>
+          <label className="block text-sm font-medium">Order Quantity</label>
           <input
             type="number"
             {...register("orderQuantity", {
               required: "Quantity is required",
               min: {
-                value: productData?.minQuantity,
+                value: productData.minQuantity,
                 message: `Minimum order is ${productData.minQuantity}`,
               },
               max: {
                 value: productData.maxQuantity,
-                message: `Cannot order more than ${productData?.maxQuantity}`,
+                message: `Cannot order more than ${productData.maxQuantity}`,
               },
               valueAsNumber: true,
             })}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2 mb-2"
           />
           {errors.orderQuantity && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.orderQuantity?.message}
+            <p className="text-red-500 text-xs">
+              {errors.orderQuantity.message}
             </p>
           )}
-        </div>
-
-        <div>
-          <label className="block font-medium">Order Price</label>
-
+          <label className="block text-sm font-medium">Order Price</label>
           <input
             type="number"
-            {...register("orderPrice", { required: "Order price is required" })}
             readOnly
             value={orderPrice}
-            className="w-full border rounded px-3 py-2 bg-gray-100"
+            className="w-full border rounded-lg px-3 py-2 bg-gray-100"
           />
-
-          {errors.orderPrice && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.orderPrice.message}
-            </p>
-          )}
         </div>
-
-        <div>
-          <label className="block font-medium">Contact Number</label>
+        <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border">
+          {" "}
+          <h3 className="text-lg font-medium mb-3">Delivery Information</h3>
+          <label className="block text-sm font-medium">Contact Number</label>
           <input
             type="text"
             {...register("contactNumber", {
               required: "Contact number is required",
             })}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2 mb-2"
           />
           {errors.contactNumber && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-red-500 text-xs">
               {errors.contactNumber.message}
             </p>
           )}
-        </div>
-
-        <div>
-          <label className="block font-medium">Delivery Address</label>
+          <label className="block text-sm font-medium">Delivery Address</label>
           <textarea
             {...register("deliveryAddress", {
               required: "Delivery address is required",
             })}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2"
           />
           {errors.deliveryAddress && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-red-500 text-xs">
               {errors.deliveryAddress.message}
             </p>
           )}
         </div>
-
-        <div>
-          <label className="block font-medium">
-            Additional Notes / Instructions
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium mb-1">
+            Additional Notes
           </label>
           <textarea
             {...register("notes")}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2"
           />
         </div>
-
-        {productData.paymentMethod === "op" ? (
+        <div className="md:col-span-2">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            className="w-full bg-blue-600 text-white py-3 rounded-xl text-lg font-medium"
           >
             Place Order
           </button>
-        ) : (
-          <button
-            type="submit"
-            disabled
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            Place Order
-          </button>
-        )}
+        </div>
       </form>
     </div>
   );
