@@ -3,6 +3,7 @@ import useAuth from "../../Hooks/useAuth";
 import HeroBanar from "./HeroBanar";
 import OurProducts from "./OurProducts";
 import HowItWorks from "./HowItWorks";
+import CustomerFeedback from "./CustomerFeedback";
 
 const Home = () => {
   const user = useAuth();
@@ -14,6 +15,7 @@ const Home = () => {
       <HeroBanar />
       <OurProducts />
       <HowItWorks />
+      <CustomerFeedback />
     </div>
   );
 };
