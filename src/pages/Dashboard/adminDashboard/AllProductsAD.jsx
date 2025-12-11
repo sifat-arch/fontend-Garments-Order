@@ -50,9 +50,7 @@ const AllProductsAD = () => {
         showOnHome: value,
       });
 
-      refetch(); // Data refresh
-
-      // ✅ Success Alert
+      refetch();
       Swal.fire({
         icon: "success",
         title: "Updated!",
