@@ -133,7 +133,7 @@ const router = createBrowserRouter([
         element: <ApprovedOrders />,
       },
       {
-        path: "view-trackings",
+        path: "view-trackings/:id",
         element: <ViewTracking />,
       },
       {

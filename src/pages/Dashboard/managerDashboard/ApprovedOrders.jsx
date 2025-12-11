@@ -1,18 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 
 const ApprovedOrders = () => {
+  const [trackingId, setTrackingId] = useState(null);
   const axiosSecure = useAxiosSecure();
   const addModelRef = useRef();
-  const { register, handleSubmit } = useForm();
-
-  const onSetTracking = (data) => {
-    console.log(data);
-  };
+  const { register, handleSubmit, reset } = useForm();
 
   const { data: orders = [] } = useQuery({
     queryKey: ["orders"],
@@ -23,8 +20,27 @@ const ApprovedOrders = () => {
     },
   });
 
-  const handleAddTracking = () => {
-    addModelRef.current.showModal();
+  const onSetTracking = (data) => {
+    console.log(data);
+    const trackingInfo = {
+      ...data,
+      orderId: trackingId,
+      dateTime: new Date(),
+    };
+
+    axiosSecure.post("/trackings", trackingInfo).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        reset();
+      }
+    });
   };
 
   return (
@@ -55,7 +71,13 @@ const ApprovedOrders = () => {
                   <td>{order.orderQuantity}</td>
                   <td>{order.approvedAt}</td>
                   <td>
-                    <button className="btn" onClick={handleAddTracking}>
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        setTrackingId(order._id);
+                        addModelRef.current.showModal();
+                      }}
+                    >
                       Add Tracking
                     </button>
 
@@ -76,22 +98,7 @@ const ApprovedOrders = () => {
                                 {...register("status", { required: true })}
                                 className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                               >
-                                <option value="" disabled selected>
-                                  Select Status
-                                </option>
-                                <option value="Cutting Completed">
-                                  Cutting Completed
-                                </option>
-                                <option value="Sewing Started">
-                                  Sewing Started
-                                </option>
-                                <option value="Finishing">Finishing</option>
-                                <option value="QC Checked">QC Checked</option>
-                                <option value="Packed">Packed</option>
                                 <option value="Shipped">Shipped</option>
-                                <option value="Out for Delivery">
-                                  Out for Delivery
-                                </option>
                               </select>
                             </div>
 
@@ -120,18 +127,6 @@ const ApprovedOrders = () => {
                               />
                             </div>
 
-                            {/* Date/Time */}
-                            <div className="flex flex-col">
-                              <label className="mb-2 font-medium text-gray-700">
-                                Date & Time
-                              </label>
-                              <input
-                                type="datetime-local"
-                                {...register("time", { required: true })}
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                              />
-                            </div>
-
                             {/* Submit Button */}
                             <button
                               type="submit"
@@ -150,7 +145,10 @@ const ApprovedOrders = () => {
                       </div>
                     </dialog>
 
-                    <Link className="btn" to="/dashboard/order-details">
+                    <Link
+                      className="btn"
+                      to={`/dashboard/view-trackings/${order._id}`}
+                    >
                       View Tracking
                     </Link>
                   </td>

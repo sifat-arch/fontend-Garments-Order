@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -9,7 +10,7 @@ const ManageUsers = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const suspendRef = useRef();
   const { register, handleSubmit } = useForm();
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["products", searchText],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?searchText=${searchText}`);
@@ -33,11 +34,23 @@ const ManageUsers = () => {
   };
 
   const onSuspendSubmit = async (data) => {
-    await axiosSecure.patch(`/users/suspend/${selectedUser._id}`, {
+    const res = await axiosSecure.patch(`/users/suspend/${selectedUser._id}`, {
       reason: data.reason,
       feedback: data.feedback,
       role: "suspended",
     });
+
+    if (res.data.modifiedCount) {
+      refetch();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Suspend successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    refetch();
 
     suspendRef.current.close();
   };
@@ -46,22 +59,29 @@ const ManageUsers = () => {
     const res = await axiosSecure.patch(`/users/approveRole/${id}`);
 
     if (res.data.modifiedCount) {
-      alert("manager approuped");
+      refetch();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "approved as manager",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
-  const handleUpdateChange = async (e, id) => {
-    const value = e.target.value;
-    console.log(id, value);
+  // const handleUpdateChange = async (e, id) => {
+  //   const value = e.target.value;
+  //   console.log(id, value);
 
-    const res = await axiosSecure.patch(`/users/approveRole/${id}`, {
-      role: value,
-    });
+  //   const res = await axiosSecure.patch(`/users/approveRole/${id}`, {
+  //     role: value,
+  //   });
 
-    if (res.data.modifiedCount) {
-      alert("Manager approved");
-    }
-  };
+  //   if (res.data.modifiedCount) {
+  //     alert("Manager approved");
+  //   }
+  // };
   return (
     <div>
       <h2>manage users : {users.length}</h2>
@@ -146,20 +166,11 @@ const ManageUsers = () => {
                 <td>{user.role}</td>
                 <td>{user.status}</td>
                 <td className="flex">
-                  <select
-                    defaultValue="Pick a color"
-                    className="select"
-                    onChange={(e) => handleUpdateChange(e, user._id)}
-                  >
-                    <option disabled={true}>Update</option>
-                    <option value="manager">Manager</option>
-                    <option value={"buyer"}>Buyer</option>
-                  </select>
                   <button
                     className="btn"
                     onClick={() => handleApproveRole(user._id)}
                   >
-                    Approve
+                    Approve as Manager
                   </button>
 
                   <button className="btn" onClick={() => handleSuspend(user)}>

@@ -67,11 +67,14 @@ const MyOrders = () => {
                   <th>{i + 1}</th>
                   <td>{order._id}</td>
                   <td>{order.user}</td>
-                  <td>{order.product}</td>
+                  {/* <td>{order.product}</td> */}
                   <td>{order.status}</td>
                   <td>{order.createdAt}</td>
                   <td>
-                    <Link className="btn" to="/dashboard/order-details">
+                    <Link
+                      className="btn"
+                      to={`/dashboard/view-trackings/${order._id}`}
+                    >
                       View
                     </Link>
                     <button

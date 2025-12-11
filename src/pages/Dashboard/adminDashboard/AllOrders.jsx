@@ -59,10 +59,13 @@ const AllOrders = () => {
                   <td>{order._id}</td>
                   <td>ROn</td>
                   <td>{order.product}</td>
-                  <td>{order.quantity}</td>
+                  <td>{order.orderQuantity}</td>
                   <td>{order.paymentStatus}</td>
                   <td>
-                    <Link className="btn" to="/dashboard/order-details">
+                    <Link
+                      className="btn"
+                      to={`/dashboard/view-trackings/${order._id}`}
+                    >
                       View
                     </Link>
                   </td>

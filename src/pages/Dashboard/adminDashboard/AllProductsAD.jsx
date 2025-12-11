@@ -50,11 +50,28 @@ const AllProductsAD = () => {
         showOnHome: value,
       });
 
-      refetch();
+      refetch(); // Data refresh
+
+      // ✅ Success Alert
+      Swal.fire({
+        icon: "success",
+        title: "Updated!",
+        text: "Product visibility updated successfully",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (err) {
       console.log(err);
+
+      // Optional: Error Alert
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
     }
   };
+  console.log(products);
 
   return (
     <div>
@@ -68,8 +85,9 @@ const AllProductsAD = () => {
               <th>No</th>
               <th>Name</th>
               <th>Price</th>
+
               <th>Category</th>
-              <th>Created By</th>
+              {/* <th>Created By</th> */}
               <th>Actions</th>
             </tr>
           </thead>
@@ -84,7 +102,7 @@ const AllProductsAD = () => {
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
                           <img
-                            src={product.photo}
+                            src={product.image}
                             alt="Avatar Tailwind CSS Component"
                           />
                         </div>
@@ -96,11 +114,12 @@ const AllProductsAD = () => {
                   </td>
                   <td>
                     <span className="badge badge-ghost badge-sm">
-                      {product.pricePerUnit}
+                      {product.price}
                     </span>
                   </td>
+
                   <td>{product.category}</td>
-                  <th>{product.firstName}</th>
+                  {/* <th>{product.}</th> */}
                   <th className="flex gap-2">
                     <button
                       className="btn"
@@ -118,7 +137,7 @@ const AllProductsAD = () => {
                     <span className="flex items-center">
                       <input
                         type="checkbox"
-                        defaultChecked
+                        checked={product.showOnHome ? true : false}
                         className="checkbox checkbox-xl"
                         onChange={(e) =>
                           handleToggle(product._id, e.target.checked)

@@ -118,7 +118,7 @@ const OrderForm = () => {
           icon: "success",
           title: "Your order has been placed",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         navigate("/dashboard/my-orders");
       }
