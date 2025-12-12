@@ -46,7 +46,7 @@ const OurProducts = () => {
                   {product.price || 34}
                 </p>
                 <Link
-                  to={`/products/${product._id}`}
+                  to={`/product-details/${product._id}`}
                   className="btn btn-primary btn-sm"
                 >
                   View Details

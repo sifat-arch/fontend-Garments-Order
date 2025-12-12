@@ -3,9 +3,11 @@ import React from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 const AllProductsAD = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],

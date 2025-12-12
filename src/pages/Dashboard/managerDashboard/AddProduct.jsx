@@ -14,6 +14,7 @@ import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 const AddProduct = () => {
   const [preview, setPreview] = useState("");
@@ -85,6 +86,15 @@ const AddProduct = () => {
       setPreview(URL.createObjectURL(file));
     }
   };
+
+  const { data: userStatus = {} } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/myProfile?email=${user.email}`);
+
+      return res.data;
+    },
+  });
 
   return (
     <div>
@@ -366,12 +376,16 @@ const AddProduct = () => {
 
             {/* Action Buttons */}
             <div className="pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
-              <button
-                type="submit"
-                className="px-8 py-3 rounded-lg bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40 transform hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Save Product
-              </button>
+              {userStatus.status === "suspended" ? (
+                ""
+              ) : (
+                <button
+                  type="submit"
+                  className="px-8 py-3 rounded-lg bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40 transform hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  Save Product
+                </button>
+              )}
             </div>
           </form>
         </div>

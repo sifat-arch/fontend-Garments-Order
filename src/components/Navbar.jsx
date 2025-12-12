@@ -1,10 +1,16 @@
 import React from "react";
-import { Link, NavLink } from "react-router";
+import { Link, Navigate, NavLink, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 const Navbar = () => {
   const { logOut, user } = useAuth();
+
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+
   const links = (
     <>
       <li>
@@ -13,12 +19,20 @@ const Navbar = () => {
       <li>
         <NavLink>About Us</NavLink>
       </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
-      <li>
-        <NavLink to="/register">Register</NavLink>
-      </li>
+      {user ? (
+        ""
+      ) : (
+        <>
+          {" "}
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+          <li>
+            <NavLink to="/register">Register</NavLink>
+          </li>
+        </>
+      )}
+
       <li>
         <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
@@ -39,7 +53,19 @@ const Navbar = () => {
       .catch((err) => {
         console.log(err);
       });
+    Navigate("/login");
   };
+
+  // close menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div>
@@ -77,10 +103,40 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">
-          <button className="btn" onClick={handleLogOut}>
-            {user ? <span>Logout</span> : <Link to="/login">Login</Link>}
-          </button>
+
+        <div className="navbar-end relative" ref={menuRef}>
+          {/* Profile Image */}
+          <img
+            src={user?.photoURL}
+            alt=""
+            onClick={() => setOpen(!open)}
+            className="w-14 h-14 rounded-full cursor-pointer border shadow"
+          />
+
+          {user && (
+            <AnimatePresence>
+              {open && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute shadow-lg bg-white rounded-xl p-5 top-16 right-0 w-52 z-50"
+                >
+                  <p className="text-xl font-bold text-center">
+                    {user?.displayName}
+                  </p>
+
+                  <button
+                    className="btn btn-outline w-full mt-4"
+                    onClick={handleLogOut}
+                  >
+                    Logout
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
         </div>
       </div>
     </div>

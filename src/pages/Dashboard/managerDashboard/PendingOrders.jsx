@@ -3,9 +3,11 @@ import React from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import useAuth from "../../../Hooks/useAuth";
 
 const PendingOrders = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const { data: orders = [], refetch } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
@@ -37,6 +39,17 @@ const PendingOrders = () => {
   const handleReject = (id) => {
     updateTheData(id, "rejected");
   };
+
+  const { data: userStatus = {} } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/myProfile?email=${user.email}`);
+
+      return res.data;
+    },
+  });
+
+  console.log(userStatus);
   return (
     <div>
       <h2>Pending Orders:{orders.length}</h2>
@@ -70,18 +83,28 @@ const PendingOrders = () => {
                       : "N/A"}
                   </td>
                   <td>
-                    <button
-                      className="btn"
-                      onClick={() => handleApprove(order._id)}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="btn"
-                      onClick={() => handleReject(order._id)}
-                    >
-                      Reject
-                    </button>
+                    {userStatus.status === "suspended" ? (
+                      ""
+                    ) : (
+                      <button
+                        className="btn"
+                        onClick={() => handleApprove(order._id)}
+                      >
+                        Approve
+                      </button>
+                    )}
+
+                    {userStatus.status === "suspended" ? (
+                      ""
+                    ) : (
+                      <button
+                        className="btn"
+                        onClick={() => handleReject(order._id)}
+                      >
+                        Reject
+                      </button>
+                    )}
+
                     <Link className="btn" to="/dashboard/order-details">
                       View
                     </Link>

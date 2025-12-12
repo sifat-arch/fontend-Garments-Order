@@ -3,11 +3,17 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import Loading from "../../../components/Loading";
 const ManageProducts = () => {
   const axiosSecure = useAxiosSecure();
+
   const navigate = useNavigate();
   const [searchText, setSearch] = useState("");
-  const { data: products = [], refetch } = useQuery({
+  const {
+    loading,
+    data: products = [],
+    refetch,
+  } = useQuery({
     queryKey: ["products", searchText],
     queryFn: async () => {
       const res = await axiosSecure.get(`/products?searchText=${searchText}`);
@@ -43,6 +49,10 @@ const ManageProducts = () => {
       });
     });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import React from "react";
 import heroImg from "../../assets/heroImg.jpg";
+import { Link } from "react-router";
 
 const HeroBanar = ({ logoUrl, readMoreLink }) => {
   return (
@@ -42,7 +43,7 @@ const HeroBanar = ({ logoUrl, readMoreLink }) => {
             elevate your everyday look
           </h2>
 
-          <a href={readMoreLink} className="w-fit">
+          <Link to="/all-products" href={readMoreLink} className="w-fit">
             <button className="flex items-center justify-center px-6 py-3 font-semibold text-white bg-black hover:bg-gray-800 transition duration-300 rounded-lg">
               Our Products
               <svg
@@ -60,7 +61,7 @@ const HeroBanar = ({ logoUrl, readMoreLink }) => {
                 ></path>
               </svg>
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

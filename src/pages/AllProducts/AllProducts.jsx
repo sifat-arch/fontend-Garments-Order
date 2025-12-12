@@ -17,7 +17,7 @@ const AllProducts = () => {
       const res = await axiosIn.get(
         `/productsAll?limit=${limit}&skip=${currentPage * limit}`
       );
-      setTotalApps(res.data.total);
+    setTotalApps(res.data.total);
       const pages = Math.ceil(res.data.total / limit);
       setTotalPage(pages);
       return res?.data.result;

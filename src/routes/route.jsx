@@ -30,6 +30,7 @@ import Profile from "../pages/Dashboard/BuyerDashboard/Profile";
 import AdminOnlyRoute from "./AdminOnlyRoute";
 import ManagerOnlyRoute from "./ManagerOnlayRoute";
 import BuyerOnlyRoute from "./BuyerOnlyRoute";
+import Loading from "../components/Loading";
 
 const router = createBrowserRouter([
   {

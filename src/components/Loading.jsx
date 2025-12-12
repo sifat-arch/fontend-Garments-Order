@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="w-10 h-10 fixed inset-0 flex items-center justify-center mx-auto\">
+    <div className="fixed inset-0 flex items-center justify-center bg-opacity-0">
       <div className="spinner center absolute inset-0 m-auto w-full h-full">
         {[...Array(12)].map((_, i) => (
           <div
