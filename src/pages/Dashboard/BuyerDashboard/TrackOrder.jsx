@@ -6,16 +6,16 @@ import { Link } from "react-router";
 
 const TrackOrder = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
   const { data: orders = [] } = useQuery({
     queryKey: ["orders", user],
+    enabled: !loading && !!user,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/orders?email=${user.email}`);
+      const res = await axiosSecure.get(`/orders?email=${user?.email}`);
       return res.data;
     },
   });
-
-  console.log(orders);
 
   return (
     <div>
@@ -30,6 +30,7 @@ const TrackOrder = () => {
               <th>Name</th>
               <th>Email</th>
               <th>OrderId</th>
+
               <th>Actions</th>
             </tr>
           </thead>
@@ -39,7 +40,7 @@ const TrackOrder = () => {
               return (
                 <tr key={i}>
                   <td>{i + 1}</td>
-                  <th>{order?.user}</th>
+                  <th>{order?.productTitle}</th>
                   <td>{order?.email}</td>
                   <td>{order?._id}</td>
                   <td>

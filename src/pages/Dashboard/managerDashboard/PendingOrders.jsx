@@ -6,7 +6,7 @@ import { Link } from "react-router";
 
 const PendingOrders = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: orders = [] } = useQuery({
+  const { data: orders = [], refetch } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
       const res = await axiosSecure.get("/orders");
@@ -20,6 +20,7 @@ const PendingOrders = () => {
 
     const res = await axiosSecure.patch(`/orders/${id}`, { status: updateFor });
     if (res.data.modifiedCount > 0) {
+      refetch();
       Swal.fire({
         icon: "success",
         title: `Order ${updateFor}`,
@@ -60,9 +61,14 @@ const PendingOrders = () => {
                   <th>{i + 1}</th>
                   <td>{order._id}</td>
                   <td>{order.user}</td>
-                  <td>{order.product}</td>
+                  <td>{order.productTitle}</td>
                   <td>{order.orderQuantity}</td>
-                  <td>{order.createdAt}</td>
+                  <td>{order.status}</td>
+                  <td>
+                    {order.approvedAt
+                      ? new Date(order.approvedAt).toLocaleString()
+                      : "N/A"}
+                  </td>
                   <td>
                     <button
                       className="btn"

@@ -8,9 +8,10 @@ import { useNavigate } from "react-router";
 const Profile = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const { user, logOut } = useAuth();
+  const { user, logOut, loading } = useAuth();
   const { data: buyer = {} } = useQuery({
     queryKey: ["users"],
+    enabled: !loading && !!user,
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/users/myProfile?email=${user?.email}`
@@ -36,6 +37,16 @@ const Profile = () => {
         console.log(err);
       });
   };
+  const { data: userStatus = {} } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/myProfile?email=${user.email}`);
+
+      return res.data;
+    },
+  });
+
+  console.log(userStatus);
 
   return (
     <div>
@@ -77,6 +88,17 @@ const Profile = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-xl p-6 w-lg text-center mx-auto">
+        <p>
+          <span>Suspend reason:</span>
+          {userStatus.reason}
+        </p>
+        <p>
+          <span>Feedback:</span>
+          {userStatus.feedback}
+        </p>
       </div>
     </div>
   );

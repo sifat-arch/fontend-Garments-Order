@@ -2,11 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Link, useParams } from "react-router";
+import useAuth from "../../Hooks/useAuth";
 
 const ProductDetails = () => {
   const axiosSecure = useAxiosSecure();
   const params = useParams();
   const id = params.id;
+  const { user } = useAuth();
 
   const { data: product = {} } = useQuery({
     queryKey: ["products"],
@@ -16,8 +18,14 @@ const ProductDetails = () => {
       return res.data;
     },
   });
+  const { data: userStatus = {} } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/myProfile?email=${user.email}`);
 
-  console.log(product);
+      return res.data;
+    },
+  });
 
   return (
     <div>
@@ -72,9 +80,13 @@ const ProductDetails = () => {
             </div>
 
             {/* Order Button */}
-            <Link to={`/booking/${product._id}`} className="btn w-md">
-              Order
-            </Link>
+            {userStatus.status === "suspended" ? (
+              ""
+            ) : (
+              <Link to={`/booking/${product._id}`} className="btn w-md">
+                Order
+              </Link>
+            )}
           </div>
         </div>
       </div>

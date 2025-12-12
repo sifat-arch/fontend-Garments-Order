@@ -27,6 +27,9 @@ import MyProfile from "../pages/Dashboard/managerDashboard/MyProfile";
 import MyOrders from "../pages/Dashboard/BuyerDashboard/Myorders";
 import TrackOrder from "../pages/Dashboard/BuyerDashboard/TrackOrder";
 import Profile from "../pages/Dashboard/BuyerDashboard/Profile";
+import AdminOnlyRoute from "./AdminOnlyRoute";
+import ManagerOnlyRoute from "./ManagerOnlayRoute";
+import BuyerOnlyRoute from "./BuyerOnlyRoute";
 
 const router = createBrowserRouter([
   {
@@ -43,21 +46,20 @@ const router = createBrowserRouter([
       },
       {
         path: "product-details/:id",
-        // element: (
-        //   <PrivetRoute>
-        //     <ProductDetails />,
-        //   </PrivetRoute>
-        // ),
+        element: (
+          <PrivetRoute>
+            <ProductDetails />,
+          </PrivetRoute>
+        ),
         Component: ProductDetails,
       },
       {
         path: "booking/:id",
-        // element: (
-        //   <PrivetRoute>
-        //     <Booking />,
-        //   </PrivetRoute>
-        // ),
-        Component: Booking,
+        element: (
+          <PrivetRoute>
+            <Booking />,
+          </PrivetRoute>
+        ),
       },
       {
         path: "payment-success",
@@ -86,24 +88,37 @@ const router = createBrowserRouter([
 
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivetRoute>
+        <DashboardLayout />
+      </PrivetRoute>
+    ),
+
     children: [
-      {
-        path: "my-orders",
-        element: <MyOrders />,
-      },
       // admin only routes
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminOnlyRoute>
+            <ManageUsers />
+          </AdminOnlyRoute>
+        ),
       },
       {
         path: "all-products",
-        element: <AllProductsAD />,
+        element: (
+          <AdminOnlyRoute>
+            <AllProductsAD />,
+          </AdminOnlyRoute>
+        ),
       },
       {
         path: "all-orders",
-        element: <AllOrders />,
+        element: (
+          <AdminOnlyRoute>
+            <AllOrders />,
+          </AdminOnlyRoute>
+        ),
       },
       {
         path: "update-product",
@@ -118,19 +133,35 @@ const router = createBrowserRouter([
 
       {
         path: "add-products",
-        element: <AddProduct />,
+        element: (
+          <ManagerOnlyRoute>
+            <AddProduct />,
+          </ManagerOnlyRoute>
+        ),
       },
       {
         path: "manage-products",
-        element: <ManageProducts />,
+        element: (
+          <ManagerOnlyRoute>
+            <ManageProducts />,
+          </ManagerOnlyRoute>
+        ),
       },
       {
         path: "pending-orders",
-        element: <PendingOrders />,
+        element: (
+          <ManagerOnlyRoute>
+            <PendingOrders />,
+          </ManagerOnlyRoute>
+        ),
       },
       {
         path: "Approved-orders",
-        element: <ApprovedOrders />,
+        element: (
+          <ManagerOnlyRoute>
+            <ApprovedOrders />,
+          </ManagerOnlyRoute>
+        ),
       },
       {
         path: "view-trackings/:id",
@@ -138,7 +169,20 @@ const router = createBrowserRouter([
       },
       {
         path: "my-profile",
-        element: <MyProfile />,
+        element: (
+          <ManagerOnlyRoute>
+            <MyProfile />,
+          </ManagerOnlyRoute>
+        ),
+      },
+      // buyer route
+      {
+        path: "my-orders",
+        element: (
+          <BuyerOnlyRoute>
+            <MyOrders />,
+          </BuyerOnlyRoute>
+        ),
       },
       {
         path: "track-order",
@@ -146,7 +190,11 @@ const router = createBrowserRouter([
       },
       {
         path: "buyer-profile",
-        element: <Profile />,
+        element: (
+          <BuyerOnlyRoute>
+            <Profile />,
+          </BuyerOnlyRoute>
+        ),
       },
     ],
   },

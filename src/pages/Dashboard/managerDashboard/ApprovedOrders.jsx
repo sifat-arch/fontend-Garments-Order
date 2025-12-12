@@ -67,9 +67,13 @@ const ApprovedOrders = () => {
                   <th>{i + 1}</th>
                   <td>{order._id}</td>
                   <td>{order.user}</td>
-                  <td>{order.product}</td>
+                  <td>{order.productTitle}</td>
                   <td>{order.orderQuantity}</td>
-                  <td>{order.approvedAt}</td>
+                  <td>
+                    {order.approvedAt
+                      ? new Date(order.approvedAt).toLocaleString()
+                      : "N/A"}
+                  </td>
                   <td>
                     <button
                       className="btn"

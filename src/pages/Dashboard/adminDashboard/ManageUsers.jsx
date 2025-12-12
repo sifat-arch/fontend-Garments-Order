@@ -3,21 +3,26 @@ import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const { user, loading } = useAuth();
   const [searchText, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const suspendRef = useRef();
   const { register, handleSubmit } = useForm();
   const { data: users = [], refetch } = useQuery({
-    queryKey: ["products", searchText],
+    queryKey: ["users", searchText],
+    enabled: !loading && !!user,
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?searchText=${searchText}`);
 
       return res.data;
     },
   });
+
+  console.log(users);
 
   // const { data: users = [] } = useQuery({
   //   queryKey: ["users", selectedUser],
@@ -37,7 +42,7 @@ const ManageUsers = () => {
     const res = await axiosSecure.patch(`/users/suspend/${selectedUser._id}`, {
       reason: data.reason,
       feedback: data.feedback,
-      role: "suspended",
+      status: "suspended",
     });
 
     if (res.data.modifiedCount) {

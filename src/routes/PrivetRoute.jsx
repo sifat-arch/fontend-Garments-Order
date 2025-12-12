@@ -8,8 +8,10 @@ const PrivetRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    <Loading />;
+    return <Loading />;
   }
+
+  console.log("user is", user);
 
   if (!user) {
     return <Navigate state={location.pathname} to="/login"></Navigate>;

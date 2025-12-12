@@ -57,8 +57,8 @@ const AllOrders = () => {
                 <tr key={i}>
                   <th>{i + 1}</th>
                   <td>{order._id}</td>
-                  <td>ROn</td>
-                  <td>{order.product}</td>
+                  <td>{order.user}</td>
+                  <td>{order.productTitle}</td>
                   <td>{order.orderQuantity}</td>
                   <td>{order.paymentStatus}</td>
                   <td>

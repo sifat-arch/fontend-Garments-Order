@@ -31,6 +31,8 @@ const useAxiosSecure = () => {
           });
         }
 
+        console.log("error is", statusCode);
+
         return Promise.reject(error);
       }
     );

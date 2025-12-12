@@ -1,7 +1,6 @@
 import React from "react";
 
-// Tailwind-based Loading Spinner Component
-export default function LoadingSpinner() {
+const Loading = () => {
   return (
     <div className="w-10 h-10 fixed inset-0 flex items-center justify-center mx-auto\">
       <div className="spinner center absolute inset-0 m-auto w-full h-full">
@@ -29,4 +28,6 @@ export default function LoadingSpinner() {
       </style>
     </div>
   );
-}
+};
+
+export default Loading;

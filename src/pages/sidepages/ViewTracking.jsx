@@ -7,17 +7,13 @@ const ViewTracking = () => {
   const params = useParams();
   const axiosSecure = useAxiosSecure();
 
-  console.log(params.id);
-
   const { data: tracking = [] } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", params],
     queryFn: async () => {
       const res = await axiosSecure.get(`/trackings/${params.id}`);
       return res.data;
     },
   });
-
-  console.log(tracking);
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
