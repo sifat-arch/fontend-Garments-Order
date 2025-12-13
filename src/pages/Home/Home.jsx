@@ -5,6 +5,7 @@ import OurProducts from "./OurProducts";
 import HowItWorks from "./HowItWorks";
 import CustomerFeedback from "./CustomerFeedback";
 import AboutUs from "./AboutUs";
+import Services from "./Services";
 
 const Home = () => {
   const user = useAuth();
@@ -17,6 +18,7 @@ const Home = () => {
       <HowItWorks />
       <CustomerFeedback />
       <AboutUs />
+      <Services />
     </div>
   );
 };

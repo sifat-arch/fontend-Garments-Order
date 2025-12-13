@@ -3,7 +3,7 @@ import React from "react";
 const AboutUs = () => {
   return (
     <div>
-      <div className="bg-stone-50 min-h-screen py-16 md:py-24">
+      <div className="bg-stone-50 my-5 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <section className="flex flex-col md:flex-row items-center justify-between mb-16 md:mb-24">
             <div className="md:w-1/2 lg:w-5/12 order-2 md:order-1 mt-8 md:mt-0">
