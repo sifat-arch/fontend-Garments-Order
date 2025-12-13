@@ -4,6 +4,7 @@ import HeroBanar from "./HeroBanar";
 import OurProducts from "./OurProducts";
 import HowItWorks from "./HowItWorks";
 import CustomerFeedback from "./CustomerFeedback";
+import AboutUs from "./AboutUs";
 
 const Home = () => {
   const user = useAuth();
@@ -15,6 +16,7 @@ const Home = () => {
       <OurProducts />
       <HowItWorks />
       <CustomerFeedback />
+      <AboutUs />
     </div>
   );
 };

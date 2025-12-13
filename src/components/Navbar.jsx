@@ -14,11 +14,12 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to="/all-products">All-Products</NavLink>
+        <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink>About Us</NavLink>
+        <NavLink to="/all-products">All-Products</NavLink>
       </li>
+
       {user ? (
         ""
       ) : (

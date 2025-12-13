@@ -1,20 +1,19 @@
 import { CreditCard, ShoppingBag, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 
-
 const steps = [
   {
-    icon: <ShoppingBag className="w-10 h-10 text-indigo-600" />,
+    icon: <ShoppingBag className="w-10 h-10 text-yellow-600" />,
     title: "Choose Your Outfit",
     desc: "Browse our latest collections and pick your style.",
   },
   {
-    icon: <CreditCard className="w-10 h-10 text-indigo-600" />,
+    icon: <CreditCard className="w-10 h-10 text-yellow-600" />,
     title: "Place Your Order",
     desc: "Add to cart and order easily in minutes.",
   },
   {
-    icon: <Truck className="w-10 h-10 text-indigo-600" />,
+    icon: <Truck className="w-10 h-10 text-yellow-600" />,
     title: "Fast Delivery",
     desc: "Get your products delivered quickly.",
   },
@@ -22,8 +21,10 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-indigo-50">
-      <h2 className="text-4xl font-bold text-center mb-12">How It Works</h2>
+    <section className="py-20 bg-gray-50 my-5">
+      <h2 className="text-4xl font-bold text-center mb-12">
+        <span className="text-yellow-400">How</span> It Works
+      </h2>
 
       <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
         {steps.map((step, i) => (
@@ -42,7 +43,7 @@ export default function HowItWorks() {
             <h3 className="text-xl font-semibold">{step.title}</h3>
             <p class="text-gray-600 mt-2">{step.desc}</p>
 
-            <div className="mt-6 text-indigo-500 font-bold text-lg">
+            <div className="mt-6 text-yellow-600 font-bold text-lg">
               0{i + 1}
             </div>
           </motion.div>

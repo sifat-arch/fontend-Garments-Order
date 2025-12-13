@@ -27,7 +27,8 @@ const AllProducts = () => {
   return (
     <div>
       <h2 className="text-4xl mt-2 ml-1 font-bold text-gre">
-        All products:{totalApps}
+        <span className="text-yellow-400">All</span> products :{" "}
+        <span className="text-red-400">{totalApps}</span>
       </h2>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5">
         {products?.map((product) => (
@@ -47,7 +48,7 @@ const AllProducts = () => {
 
         {[...Array(totalPage).keys()].map((i, index) => (
           <button
-            className={`btn ${i === currentPage && "btn-primary"}`}
+            className={`btn ${i === currentPage && "bg-yellow-400"}`}
             key={index}
             onClick={() => setCurrentPage(i)}
           >

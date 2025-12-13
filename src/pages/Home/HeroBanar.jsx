@@ -44,7 +44,7 @@ const HeroBanar = ({ logoUrl, readMoreLink }) => {
           </h2>
 
           <Link to="/all-products" href={readMoreLink} className="w-fit">
-            <button className="flex items-center justify-center px-6 py-3 font-semibold text-white bg-black hover:bg-gray-800 transition duration-300 rounded-lg">
+            <button className="flex items-center justify-center px-6 py-3 font-semibold text-white font-bold bg-yellow-500 hover:bg-yellow-600 cursor-pointer transition duration-300 rounded-lg">
               Our Products
               <svg
                 className="w-4 h-4 ml-2"

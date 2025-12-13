@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
             <h2 className="card-title text-lg font-bold flex justify-between items-center">
               {product.title || "Card Title"}
               <div className="badge badge-secondary text-sm px-3 py-1 rounded-full">
-                {product.available ? "AVAILABLE" : "OUT OF STOCK"}
+                {product.availableQuantity ? "AVAILABLE" : "OUT OF STOCK"}
               </div>
             </h2>
             <p className="text-gray-600 mt-2">
@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
               </p>
               <Link
                 to={`/product-details/${product._id}`}
-                className="btn btn-primary btn-sm"
+                className="btn bg-yellow-400 hover:bg-yellow-500 rounded-md btn-sm"
               >
                 View Details
               </Link>

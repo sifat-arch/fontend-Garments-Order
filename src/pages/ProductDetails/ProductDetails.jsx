@@ -129,7 +129,7 @@ const ProductDetails = () => {
             </p>
             {/* Details Table/List */}
             <div className="space-y-3 p-4 bg-blue-50 rounded-lg">
-              <h2 className="text-xl font-bold text-blue-700">
+              <h2 className="text-xl font-bold text-yellow-600">
                 Product Specifications
               </h2>
               <p className="text-gray-700">
@@ -158,7 +158,15 @@ const ProductDetails = () => {
               <h2 className="font-semibold mb-2 text-xl text-gray-900">
                 Payment Options:
               </h2>
-              <span className="text-gray-700">{product.paymentOptions}</span>
+              <span
+                className={
+                  product.paymentOptions === "online"
+                    ? "text-green-700 "
+                    : "text-yellow-700"
+                }
+              >
+                {product.paymentOptions}
+              </span>
             </div>
             {/* Order Button */}
             <div className="mt-6">
@@ -169,7 +177,7 @@ const ProductDetails = () => {
               ) : (
                 <Link
                   to={`/booking/${product._id}`}
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105"
+                  className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-lg font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105"
                 >
                   Place Order Now
                 </Link>

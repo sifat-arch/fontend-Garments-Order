@@ -32,9 +32,9 @@ const OurProducts = () => {
             </figure>
             <div className="card-body">
               <h2 className="card-title text-lg font-bold flex justify-between items-center">
-                {product.title || "Card Title"}
+                {product.productTitle || "Card Title"}
                 <div className="badge badge-secondary text-sm px-3 py-1 rounded-full">
-                  {product.available ? "AVAILABLE" : "OUT OF STOCK"}
+                  {product.availableQuantity ? "AVAILABLE" : "OUT OF STOCK"}
                 </div>
               </h2>
               <p className="text-gray-600 mt-2">
@@ -42,12 +42,12 @@ const OurProducts = () => {
                   "A card component has a figure, a body part, and inside body there are title and actions parts"}
               </p>
               <div className="card-actions justify-between items-center mt-4">
-                <p className="text-xl font-bold text-indigo-600">
+                <p className="text-xl font-bold text-green-600">
                   {product.price || 34}
                 </p>
                 <Link
                   to={`/product-details/${product._id}`}
-                  className="btn btn-primary btn-sm"
+                  className="btn bg-yellow-400 hover:bg-amber-500 rounded-md btn-sm"
                 >
                   View Details
                 </Link>

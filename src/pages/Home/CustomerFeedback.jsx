@@ -23,21 +23,21 @@ const reviews = [
     text: "Great service and very comfortable outfit. Will order again!",
   },
   {
-    name: "Mahin Chowdhury",
-    image: "https://i.pravatar.cc/150?img=25",
+    name: "Ananna Osman",
+    image: "https://i.ibb.co.com/Wv3TYFMQ/feedback1.jpg",
+    rating: 2,
+    text: "Great service and very comfortable outfit. Will order again!",
+  },
+  {
+    name: "Afif Jafor",
+    image: "https://i.ibb.co.com/DH3SXh1h/feedback2.jpg",
     rating: 5,
     text: "Great service and very comfortable outfit. Will order again!",
   },
   {
-    name: "Mahin Chowdhury",
-    image: "https://i.pravatar.cc/150?img=25",
-    rating: 5,
-    text: "Great service and very comfortable outfit. Will order again!",
-  },
-  {
-    name: "Mahin Chowdhury",
-    image: "https://i.pravatar.cc/150?img=25",
-    rating: 5,
+    name: "Kalek Mahmud",
+    image: "https://i.ibb.co.com/C3yG3wTn/feedback3.jpg",
+    rating: 4,
     text: "Great service and very comfortable outfit. Will order again!",
   },
 ];
@@ -46,7 +46,7 @@ export default function CustomerFeedback() {
   return (
     <section className="py-20 bg-gray-50">
       <h2 className="text-3xl font-bold text-center mb-10">
-        What Our Customers Say
+        <span className="text-yellow-400">What</span> Our Customers Say
       </h2>
 
       <Swiper
