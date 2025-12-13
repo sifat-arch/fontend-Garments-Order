@@ -50,7 +50,9 @@ const Profile = () => {
     <div>
       <div className="min-h-screen flex items-center justify-center">
         <div className="bg-white rounded-xl shadow-xl p-6 w-lg text-center h-[500px]">
-          <h2 className="mb-5 text-4xl font-bold">Buyer Profile</h2>
+          <h2 className="mb-5 text-4xl font-bold">
+            <span className="text-yellow-400">Buyer</span> Profile
+          </h2>
           {/* Profile Image */}
           <div className="flex justify-center mb-4">
             <img
@@ -72,14 +74,17 @@ const Profile = () => {
               {buyer.email}
             </p>
             <p>
-              <span className="font-semibold  text-xl">Role:</span> {buyer.role}
+              <span className="font-semibold text-gray-700 text-xl">Role:</span>{" "}
+              {buyer.role}
             </p>
             <p>
-              <span className="font-semibold  text-xl">Phone:</span>{" "}
+              <span className="font-semibold text-gray-700 text-xl">
+                Phone:
+              </span>{" "}
               01**********
             </p>
             <button
-              className="btn mt-5 w-full bg-blue-500 text-white"
+              className="btn mt-5 w-full bg-yellow-400 hover:bg-yellow-500 text-white"
               onClick={handleLogout}
             >
               Logout

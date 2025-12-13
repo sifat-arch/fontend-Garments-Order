@@ -118,7 +118,7 @@ const OrderForm = () => {
           icon: "success",
           title: "Your order has been placed",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         navigate("/dashboard/my-orders");
       }
@@ -145,7 +145,7 @@ const OrderForm = () => {
             />
           </div>
         )}
-        <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border">
+        <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border border-gray-200">
           {" "}
           <h3 className="text-lg font-medium mb-2">Product Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -155,7 +155,7 @@ const OrderForm = () => {
                 type="email"
                 readOnly
                 {...register("email")}
-                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100"
               />
             </div>
 
@@ -165,7 +165,7 @@ const OrderForm = () => {
                 type="text"
                 readOnly
                 {...register("productTitle")}
-                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100"
               />
             </div>
 
@@ -175,19 +175,19 @@ const OrderForm = () => {
                 type="text"
                 readOnly
                 value={`$${productData.price}`}
-                className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100"
               />
             </div>
           </div>
         </div>
-        <div className="bg-gray-50 p-4 rounded-xl border">
+        <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
           {" "}
           <h3 className="text-lg font-medium mb-3">Your Information</h3>
           <label className="block text-sm font-medium">First Name</label>
           <input
             type="text"
             {...register("firstName", { required: "First name is required" })}
-            className="w-full border rounded-lg px-3 py-2 mb-2"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 mb-2"
           />
           {errors.firstName && (
             <p className="text-red-500 text-xs">{errors.firstName.message}</p>
@@ -196,13 +196,13 @@ const OrderForm = () => {
           <input
             type="text"
             {...register("lastName", { required: "Last name is required" })}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2"
           />
           {errors.lastName && (
             <p className="text-red-500 text-xs">{errors.lastName.message}</p>
           )}
         </div>
-        <div className="bg-gray-50 p-4 rounded-xl border">
+        <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
           {" "}
           <h3 className="text-lg font-medium mb-3">Order Information</h3>
           <label className="block text-sm font-medium">Order Quantity</label>
@@ -220,7 +220,7 @@ const OrderForm = () => {
               },
               valueAsNumber: true,
             })}
-            className="w-full border rounded-lg px-3 py-2 mb-2"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 mb-2"
           />
           {errors.orderQuantity && (
             <p className="text-red-500 text-xs">
@@ -232,10 +232,10 @@ const OrderForm = () => {
             type="number"
             readOnly
             value={orderPrice}
-            className="w-full border rounded-lg px-3 py-2 bg-gray-100"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100"
           />
         </div>
-        <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border">
+        <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border border-gray-200">
           {" "}
           <h3 className="text-lg font-medium mb-3">Delivery Information</h3>
           <label className="block text-sm font-medium">Contact Number</label>
@@ -244,7 +244,7 @@ const OrderForm = () => {
             {...register("contactNumber", {
               required: "Contact number is required",
             })}
-            className="w-full border rounded-lg px-3 py-2 mb-2"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 mb-2"
           />
           {errors.contactNumber && (
             <p className="text-red-500 text-xs">
@@ -256,7 +256,7 @@ const OrderForm = () => {
             {...register("deliveryAddress", {
               required: "Delivery address is required",
             })}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2"
           />
           {errors.deliveryAddress && (
             <p className="text-red-500 text-xs">
@@ -270,7 +270,7 @@ const OrderForm = () => {
           </label>
           <textarea
             {...register("notes")}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2"
           />
         </div>
         <div className="md:col-span-2">

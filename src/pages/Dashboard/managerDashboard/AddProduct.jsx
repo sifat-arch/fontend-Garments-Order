@@ -102,7 +102,7 @@ const AddProduct = () => {
         {/* Main Card Container */}
         <div className="bg-white w-full max-w-4xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
           {/* Header with Gradient */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white">
+          <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-8 text-white">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
                 <ShoppingBag className="w-6 h-6 text-white" />
@@ -111,7 +111,7 @@ const AddProduct = () => {
                 <h1 className="text-2xl font-bold tracking-wide">
                   Add New Product
                 </h1>
-                <p className="text-blue-100 text-sm mt-1">
+                <p className="text-yellow-100 text-sm mt-1">
                   Fill out the details to create a new listing
                 </p>
               </div>
@@ -126,7 +126,7 @@ const AddProduct = () => {
             {/* Section: General Info */}
             <div className="space-y-5">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-blue-600" />
+                <FileText className="w-4 h-4 text-yellow-600" />
                 General Information
               </h3>
 
@@ -142,7 +142,7 @@ const AddProduct = () => {
                     })}
                     type="text"
                     placeholder="e.g. Men's Slim Fit T-Shirt"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
                   />
                   {errors.title && (
                     <p className="text-red-500">{errors.title.message}</p>
@@ -160,7 +160,7 @@ const AddProduct = () => {
                       required: "Description is required",
                     })}
                     placeholder="Write a detailed description of the product..."
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700 resize-none"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700 resize-none"
                   ></textarea>
                   {errors.description && (
                     <p className="text-red-500">"description is required"</p>
@@ -172,10 +172,10 @@ const AddProduct = () => {
             {/* Section: Pricing & Inventory */}
             <div className="space-y-5">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-blue-600" />
+                <Layers className="w-4 h-4 text-yellow-600" />
                 Pricing & Stock
               </h3>
-
+ 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Category */}
                 <div className="space-y-2">
@@ -184,7 +184,7 @@ const AddProduct = () => {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full pl-4 pr-10 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700 appearance-none cursor-pointer"
+                      className="w-full pl-4 pr-10 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700 appearance-none cursor-pointer"
                       {...register("category", {
                         required: "Category is required",
                       })}
@@ -233,7 +233,7 @@ const AddProduct = () => {
                         required: "Price is required",
                       })}
                       placeholder="0.00"
-                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
+                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
                     />
                     {errors.price && (
                       <p className="text-red-500">{errors.price.message}</p>
@@ -251,7 +251,7 @@ const AddProduct = () => {
                       <CreditCard className="w-5 h-5" />
                     </div>
                     <select
-                      className="w-full pl-11 pr-10 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700 appearance-none cursor-pointer"
+                      className="w-full pl-11 pr-10 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700 appearance-none cursor-pointer"
                       {...register("paymentOptions", {
                         required: "Select your payment is required",
                       })}
@@ -300,7 +300,7 @@ const AddProduct = () => {
                         required: "Available Quantity is required",
                       })}
                       placeholder="100"
-                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
+                      className="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
                     />
                     {errors.availableQuantity && (
                       <p className="text-red-500">
@@ -321,7 +321,7 @@ const AddProduct = () => {
                       required: "Minium Order Quantity is required",
                     })}
                     placeholder="5"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:border-yellow-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none text-gray-700"
                   />
                   {errors.miniumOrderQuantity && (
                     <p className="text-red-500">
@@ -335,7 +335,7 @@ const AddProduct = () => {
             {/* Section: Media */}
             <div className="space-y-5">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
-                <Upload className="w-4 h-4 text-blue-600" />
+                <Upload className="w-4 h-4 text-yellow-600" />
                 Upload Images
               </h3>
 
@@ -343,10 +343,10 @@ const AddProduct = () => {
                 <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-blue-200 border-dashed rounded-xl cursor-pointer bg-blue-50/30 hover:bg-blue-50 transition-colors duration-300">
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <div className="p-3 bg-blue-100 rounded-full mb-3">
-                      <Upload className="w-6 h-6 text-blue-600" />
+                      <Upload className="w-6 h-6 text-yellow-600" />
                     </div>
                     <p className="mb-1 text-sm text-gray-600 font-medium">
-                      <span className="text-blue-600 font-semibold">
+                      <span className="text-yellow-600 font-semibold">
                         Click to upload
                       </span>{" "}
                       or drag and drop
@@ -381,7 +381,7 @@ const AddProduct = () => {
               ) : (
                 <button
                   type="submit"
-                  className="px-8 py-3 rounded-lg bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40 transform hover:-translate-y-0.5 transition-all duration-200"
+                  className="px-8 py-3 rounded-lg bg-yellow-400 text-white font-bold shadow-lg shadow-blue-600/30 hover:bg--500 hover:shadow-blue-700/40 transform hover:-translate-y-0.5 transition-all duration-200"
                 >
                   Save Product
                 </button>

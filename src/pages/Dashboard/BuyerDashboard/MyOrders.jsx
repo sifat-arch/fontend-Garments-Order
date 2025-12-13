@@ -46,7 +46,9 @@ const MyOrders = () => {
   };
   return (
     <div>
-      <h2>Pending Orders:{orders.length}</h2>
+      <h2 className="text-4xl font-bold mb-4">
+        <span className="text-yellow-400">Pending</span> Orders
+      </h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -68,18 +70,26 @@ const MyOrders = () => {
                   <th>{i + 1}</th>
                   <td>{order._id}</td>
                   <td>{order.user}</td>
-                  {/* <td>{order.product}</td> */}
-                  <td>{order.status}</td>
+                  <td className="font-bold">{order.product}</td>
+                  <td
+                    className={
+                      order.status === "approved"
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }
+                  >
+                    {order.status}
+                  </td>
                   <td>{order.createdAt}</td>
-                  <td>
+                  <td className="flex gap-2">
                     <Link
-                      className="btn"
+                      className="btn bg-yellow-200 hover:bg-yellow-300"
                       to={`/dashboard/view-trackings/${order._id}`}
                     >
                       View
                     </Link>
                     <button
-                      className="btn"
+                      className="btn bg-red-400 hover:bg-red-500 text-white"
                       onClick={() => handleCancelOrder(order._id)}
                     >
                       Cancel Order

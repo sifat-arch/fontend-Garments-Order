@@ -19,7 +19,9 @@ const TrackOrder = () => {
 
   return (
     <div>
-      <h2>My Orders</h2>
+      <h2 className="text-4xl mb-4 font-bold">
+        <span className="text-yellow-400">My</span> Orders
+      </h2>
 
       <div className="overflow-x-auto">
         <table className="table table-zebra">
@@ -45,7 +47,7 @@ const TrackOrder = () => {
                   <td>{order?._id}</td>
                   <td>
                     <Link
-                      className="btn"
+                      className="btn bg-amber-200 gb-yellow-300"
                       to={`/dashboard/view-trackings/${order?._id}`}
                     >
                       Track Your order

@@ -244,11 +244,13 @@ const ProductUpdate = () => {
         <h2 className="text-3xl font-bold mb-6 text-center">Update Product</h2>
 
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+          <label className="block mb-1 font-medium">Product Title</label>
           <input
             {...register("productTitle")}
             placeholder="Product Title"
             className="input input-bordered w-full rounded-xl"
           />
+          <label className="block mb-1 font-medium">Quantity</label>
 
           <input
             type="number"

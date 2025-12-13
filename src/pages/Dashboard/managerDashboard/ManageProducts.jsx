@@ -56,8 +56,11 @@ const ManageProducts = () => {
 
   return (
     <div>
-      <h2>manage products:{products.length}</h2>d{/* search input */}
-      <label className="input">
+      <h2 className="font-bold text-4xl mb-3">
+        <span className="text-yellow-500">manage</span> products
+      </h2>
+      {/* search input */}
+      <label className="input mb-3">
         <svg
           className="h-[1em] opacity-50"
           xmlns="http://www.w3.org/2000/svg"
@@ -111,21 +114,29 @@ const ManageProducts = () => {
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <th>
                     {product.productTitle}
                     <br />
-                  </td>
+                  </th>
                   <td>{product.price}</td>
-                  <td>{product.paymentOptions}</td>
-                  <td>
+                  <td
+                    className={
+                      product.paymentOptions === "online"
+                        ? "text-green-400"
+                        : "text-yellow-600"
+                    }
+                  >
+                    {product.paymentOptions}
+                  </td>
+                  <td className="flex gap-2">
                     <button
-                      className="btn"
+                      className="btn bg-amber-300 hover:bg-amber-400"
                       onClick={() => handleUpdate(product)}
                     >
                       Updata
                     </button>
                     <button
-                      className="btn"
+                      className="btn bg-red-400 text-white"
                       onClick={() => handleDelete(product._id)}
                     >
                       Delete

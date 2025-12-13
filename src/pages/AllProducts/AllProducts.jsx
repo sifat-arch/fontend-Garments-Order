@@ -17,7 +17,7 @@ const AllProducts = () => {
       const res = await axiosIn.get(
         `/productsAll?limit=${limit}&skip=${currentPage * limit}`
       );
-    setTotalApps(res.data.total);
+      setTotalApps(res.data.total);
       const pages = Math.ceil(res.data.total / limit);
       setTotalPage(pages);
       return res?.data.result;
@@ -26,8 +26,10 @@ const AllProducts = () => {
 
   return (
     <div>
-      <h2>All products:{totalApps}</h2>
-      <div className="max-w-7xl mx-auto grid grid-cols-3 gap-5">
+      <h2 className="text-4xl mt-2 ml-1 font-bold text-gre">
+        All products:{totalApps}
+      </h2>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5">
         {products?.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
