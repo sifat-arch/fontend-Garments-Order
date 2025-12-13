@@ -45,14 +45,14 @@ const MyProfile = () => {
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-            Profile Page
+            <span className="text-yellow-400">Profile</span> Page
           </h1>
         </div>
         {/* Main Profile Card */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
           <div className="relative">
             {/* Cover Image */}
-            <div className="h-48 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+            <div className="h-48 bg-gradient-to-r from-yellow-300 to-yellow-400"></div>
 
             {/* Profile Image */}
             <div className="absolute -bottom-16 left-8">
@@ -69,7 +69,7 @@ const MyProfile = () => {
             {/* Edit Button */}
             <div className="absolute top-4 right-4">
               <button
-                className="bg-white/90 hover:bg-white text-gray-800 font-medium py-2 px-4 rounded-lg shadow transition duration-200"
+                className="bg-white/90 hover:bg-white text-gray-800 font-medium py-2 px-4 rounded-lg shadow transition duration-200 cursor-pointer"
                 onClick={handleLogout}
               >
                 Logout
@@ -249,7 +249,7 @@ const MyProfile = () => {
             </div>
           </div>
         </div>
-        <div className="w-full mx-auto bg-white shadow-lg rounded-xl border border-purple-600 p-5 space-y-3">
+        <div className="w-full mx-auto bg-white shadow-lg rounded-xl border border-yellow-600 p-5 space-y-3">
           <h3 className="text-lg font-semibold text-gray-800">
             Suspend Details
           </h3>

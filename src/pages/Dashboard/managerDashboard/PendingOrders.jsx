@@ -65,7 +65,9 @@ const PendingOrders = () => {
               <th>User </th>
               <th>Product </th>
               <th>Quantity </th>
+              <th>Status</th>
               <th>Order Date </th>
+
               <th>Actions </th>
             </tr>
           </thead>
@@ -78,18 +80,28 @@ const PendingOrders = () => {
                   <th>{order.user}</th>
                   <td>{order.productTitle}</td>
                   <td>{order.orderQuantity}</td>
-                  <td>{order.status}</td>
+                  <td
+                    className={
+                      order.status === "approved"
+                        ? "text-green-500"
+                        : order.status === "rejected"
+                        ? "text-red-500"
+                        : "text-yellow-500"
+                    }
+                  >
+                    {order.status}
+                  </td>
                   <td>
                     {order.approvedAt
                       ? new Date(order.approvedAt).toLocaleString()
                       : "N/A"}
                   </td>
-                  <td>
+                  <td className="flex flex-wrap gap-3">
                     {userStatus.status === "suspended" ? (
                       ""
                     ) : (
                       <button
-                        className="btn"
+                        className="btn bg-green-300 hover:bg-green-400"
                         onClick={() => handleApprove(order._id)}
                       >
                         Approve
@@ -100,14 +112,17 @@ const PendingOrders = () => {
                       ""
                     ) : (
                       <button
-                        className="btn"
+                        className="btn  bg-red-300 hover:bg-red-400"
                         onClick={() => handleReject(order._id)}
                       >
                         Reject
                       </button>
                     )}
 
-                    <Link className="btn" to="/dashboard/order-details">
+                    <Link
+                      className="btn  bg-yellow-300 hover:bg-yellow-400"
+                      to="/dashboard/order-details"
+                    >
                       View
                     </Link>
                   </td>

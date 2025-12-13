@@ -45,7 +45,9 @@ const ApprovedOrders = () => {
 
   return (
     <div>
-      <h2>Pending Orders:{orders.length}</h2>
+      <h2 className="text-4xl font-bold mb-4">
+        <span className="text-yellow-400">Pending</span> Orders
+      </h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -66,7 +68,7 @@ const ApprovedOrders = () => {
                 <tr key={i}>
                   <th>{i + 1}</th>
                   <td>{order._id}</td>
-                  <td>{order.user}</td>
+                  <th>{order.user}</th>
                   <td>{order.productTitle}</td>
                   <td>{order.orderQuantity}</td>
                   <td>
@@ -74,15 +76,15 @@ const ApprovedOrders = () => {
                       ? new Date(order.approvedAt).toLocaleString()
                       : "N/A"}
                   </td>
-                  <td>
+                  <td className="flex flex-wrap gap-3">
                     <button
-                      className="btn"
+                      className="btn bg-green-300 hover:bg-green-400"
                       onClick={() => {
                         setTrackingId(order._id);
                         addModelRef.current.showModal();
                       }}
                     >
-                      Add Tracking
+                      Tracking
                     </button>
 
                     <dialog ref={addModelRef} id="my_modal_1" className="modal">
@@ -150,7 +152,7 @@ const ApprovedOrders = () => {
                     </dialog>
 
                     <Link
-                      className="btn"
+                      className="btn bg-yellow-300 hover:bg-yellow-400"
                       to={`/dashboard/view-trackings/${order._id}`}
                     >
                       View Tracking
