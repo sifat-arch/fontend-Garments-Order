@@ -221,8 +221,6 @@ const ProductUpdate = () => {
           timer: 1500,
         });
       }
-
-      navigate("/dashboard/all-products");
     } catch (err) {
       console.error(err);
       alert("Failed to update product!");
@@ -309,7 +307,7 @@ const ProductUpdate = () => {
 
           <button
             type="submit"
-            className="btn w-full rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-md"
+            className="btn w-full rounded-xl bg-yellow-500 text-white hover:bg-yellow-700 shadow-md"
           >
             Update Product
           </button>

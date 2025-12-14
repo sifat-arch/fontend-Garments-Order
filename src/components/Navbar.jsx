@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import useTheme from "../Hooks/useTheme";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { logOut, user } = useAuth();
@@ -98,9 +99,11 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost text-xl">
-            One Garments Shop
-          </Link>
+          <div className="flex flex-col gap-5">
+            <Link to="/" className="btn btn-ghost text-xl">
+              <img src={logo} alt="" className="h-13 rounded-2xl" />
+            </Link>
+          </div>
           <div>
             <input
               onChange={(e) => toggleTheme(e.target.checked)}

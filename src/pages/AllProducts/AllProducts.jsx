@@ -26,7 +26,7 @@ const AllProducts = () => {
 
   return (
     <div>
-      <h2 className="text-4xl mt-2 ml-1 font-bold text-gre">
+      <h2 className="text-4xl mt-7 ml-1 font-bold text-gre">
         <span className="text-yellow-400">All</span> products :{" "}
         <span className="text-red-400">{totalApps}</span>
       </h2>

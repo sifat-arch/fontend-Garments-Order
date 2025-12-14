@@ -76,19 +76,6 @@ const ManageUsers = () => {
     }
   };
 
-  // const handleUpdateChange = async (e, id) => {
-  //   const value = e.target.value;
-  //   console.log(id, value);
-
-  //   const res = await axiosSecure.patch(`/users/approveRole/${id}`, {
-  //     role: value,
-  //   });
-
-  //   if (res.data.modifiedCount) {
-  //     alert("Manager approved");
-  //   }
-  // };
-
   useEffect(() => {
     const fetchFilteredUsers = async () => {
       if (!filterStatus) {
@@ -107,7 +94,9 @@ const ManageUsers = () => {
 
   return (
     <div>
-      <h2>manage users : {users.length}</h2>
+      <h2 className="text-4xl font-bold mb-3">
+        <span className="text-yellow-500">manage</span> users : {users.length}
+      </h2>
 
       {/* search */}
       <div className="flex justify-between">
@@ -132,7 +121,7 @@ const ManageUsers = () => {
             type="search"
             onChange={(e) => setSearch(e.target.value)}
             required
-            placeholder="Search"
+            placeholder="Search by name"
           />
         </label>
 
@@ -213,7 +202,7 @@ const ManageUsers = () => {
                 </td>
                 <td className="flex flex-wrap gap-3">
                   <button
-                    className="btn bg-green-300 hover:bg-green-400"
+                    className="btn bg-green-300 hover:bg-green-400 text-black"
                     onClick={() => handleApproveRole(user._id)}
                   >
                     Approve as Manager

@@ -58,7 +58,7 @@ const AllOrders = () => {
             type="search"
             onChange={(e) => setSearch(e.target.value)}
             required
-            placeholder="Search"
+            placeholder="Search by product"
           />
         </label>
 
@@ -110,7 +110,7 @@ const AllOrders = () => {
                   </td>
                   <td>
                     <Link
-                      className="btn bg-yellow-300 hover:bg-yellow-400"
+                      className="btn bg-yellow-300 hover:bg-yellow-400 text-black"
                       to={`/dashboard/view-trackings/${order._id}`}
                     >
                       View

@@ -121,7 +121,7 @@ const AllProductsAD = () => {
                   {/* <th>{product.}</th> */}
                   <th className="flex gap-2">
                     <button
-                      className="btn bg-yellow-300 hover:bg-amber-400"
+                      className="btn bg-yellow-300 hover:bg-amber-400 text-black"
                       onClick={() => handleUpdate(product)}
                     >
                       Update
