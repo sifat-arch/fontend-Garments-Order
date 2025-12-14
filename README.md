@@ -1,16 +1,170 @@
-# React + Vite
+# 🧵 One Garments Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**One Garments Shop** is a full-stack garments e-commerce web application designed for buying and selling garments products with a **role-based management system**. The platform supports **Admin, Manager, and Buyer** roles, each with dedicated functionalities to ensure smooth operation, security, and scalability.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Live Project
 
-## React Compiler
+> Deployed using **Firebase Hosting**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🎯 Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 👤 Role-Based Access Control
+
+#### 🔑 Admin
+
+- Suspend any user
+- Delete and update user accounts
+- Monitor and manage the entire system
+
+#### 🧑‍💼 Manager
+
+- Add new garments products
+- Manage and update own products
+
+#### 🛒 Buyer
+
+- Browse available garments products
+- Purchase products
+- Complete payments using secure payment options
+
+---
+
+## 💳 Payment System
+
+- Integrated secure payment gateway
+- Order confirmation after successful payment
+
+---
+
+## 🧩 Technologies Used
+
+### 🖥️ Frontend
+
+- React
+- React Router DOM
+- Tailwind CSS
+- DaisyUI
+
+### 🗄️ Backend
+
+- Node.js
+- Express.js
+- MongoDB
+
+### 🔐 Authentication & Hosting
+
+- Firebase Authentication
+- Firebase Hosting
+
+---
+
+## 🔐 Authentication & Security
+
+- User authentication using Firebase Authentication
+- JWT-based secure API access
+- Protected routes based on user roles (Admin / Manager / Buyer)
+
+---
+
+## 📁 Project Structure (Overview)
+
+```
+one-garments-shop
+│── client
+│   ├── src
+│   │   ├── components
+│   │   ├── pages
+│   │   ├── routes
+│   │   ├── hooks
+│   │   └── layouts
+│
+│── server
+│   ├── routes
+│   ├── controllers
+│   ├── middleware
+│   └── index.js
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone <your-repository-url>
+```
+
+### 2️⃣ Client Setup
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+### 3️⃣ Server Setup
+
+```bash
+cd server
+npm install
+nodemon index.js
+```
+
+---
+
+## 🌐 Environment Variables
+
+### Client (.env)
+
+```
+VITE_apiKey=your_firebase_api_key
+VITE_authDomain=your_auth_domain
+```
+
+### Server (.env)
+
+```
+DB_USER=your_mongodb_user
+DB_PASS=your_mongodb_password
+ACCESS_TOKEN_SECRET=your_jwt_secret
+```
+
+---
+
+## 📦 Deployment
+
+- Frontend deployed on **Firebase Hosting**
+- Backend deployable on **Vercel / Render / Railway**
+
+### Redeploy Commands
+
+```bash
+npm run build
+firebase deploy
+```
+
+---
+
+## 🚧 Future Improvements
+
+- Order tracking system
+- Product reviews and ratings
+- Sales and analytics dashboard
+
+---
+
+## 👨‍💻 Author
+
+**One Garments Shop**
+Developed by **Sifat**
+
+---
+
+## 📜 License
+
+This project is developed for educational and portfolio purposes.
