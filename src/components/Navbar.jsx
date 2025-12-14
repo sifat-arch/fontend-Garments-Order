@@ -1,13 +1,14 @@
 import React from "react";
-import { Link, Navigate, NavLink, useNavigate } from "react-router";
+import { Link, Navigate, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import useTheme from "../Hooks/useTheme";
 
 const Navbar = () => {
   const { logOut, user } = useAuth();
-
+  const { theme, toggleTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -100,7 +101,17 @@ const Navbar = () => {
           <Link to="/" className="btn btn-ghost text-xl">
             One Garments Shop
           </Link>
+          <div>
+            <input
+              onChange={(e) => toggleTheme(e.target.checked)}
+              type="checkbox"
+              checked={theme === "dark"}
+              defaultChecked={localStorage.getItem("theme") === "dark"}
+              className="toggle"
+            />
+          </div>
         </div>
+
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
@@ -122,14 +133,23 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute shadow-lg bg-white rounded-xl p-5 top-16 right-0 w-52 z-50"
+                  className={`absolute shadow-lg rounded-xl p-5 top-16 right-0 w-52 z-50 
+          ${
+            theme === "dark"
+              ? "bg-gray-800 text-gray-100"
+              : "bg-white text-gray-900"
+          }`}
                 >
                   <p className="text-xl font-bold text-center">
                     {user?.displayName}
                   </p>
 
                   <button
-                    className="btn btn-outline w-full mt-4"
+                    className={`btn w-full mt-4 ${
+                      theme === "dark"
+                        ? "btn-outline border-gray-600 text-gray-100 hover:bg-gray-700"
+                        : "btn-outline text-gray-900"
+                    }`}
                     onClick={handleLogOut}
                   >
                     Logout

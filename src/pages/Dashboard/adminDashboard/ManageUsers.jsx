@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
@@ -10,6 +10,9 @@ const ManageUsers = () => {
   const { user, loading } = useAuth();
   const [searchText, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
+  const [filterStatus, setFilterStatus] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   const suspendRef = useRef();
   const { register, handleSubmit } = useForm();
   const { data: users = [], refetch } = useQuery({
@@ -21,8 +24,6 @@ const ManageUsers = () => {
       return res.data;
     },
   });
-
-  console.log(users);
 
   // const { data: users = [] } = useQuery({
   //   queryKey: ["users", selectedUser],
@@ -87,36 +88,66 @@ const ManageUsers = () => {
   //     alert("Manager approved");
   //   }
   // };
+
+  useEffect(() => {
+    const fetchFilteredUsers = async () => {
+      if (!filterStatus) {
+        setFilteredUsers([]);
+        return;
+      }
+
+      const res = await axiosSecure.get(`/userFilter?status=${filterStatus}`);
+      setFilteredUsers(res.data);
+    };
+
+    fetchFilteredUsers();
+  }, [filterStatus, axiosSecure]);
+
+  const displayUsers = filterStatus ? filteredUsers : users;
+
   return (
     <div>
       <h2>manage users : {users.length}</h2>
 
       {/* search */}
-      <label className="input">
-        <svg
-          className="h-[1em] opacity-50"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <g
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            strokeWidth="2.5"
-            fill="none"
-            stroke="currentColor"
+      <div className="flex justify-between">
+        <label className="input">
+          <svg
+            className="h-[1em] opacity-50"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
           >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input
-          type="search"
-          onChange={(e) => setSearch(e.target.value)}
-          required
-          placeholder="Search"
-        />
-      </label>
+            <g
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2.5"
+              fill="none"
+              stroke="currentColor"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </g>
+          </svg>
+          <input
+            type="search"
+            onChange={(e) => setSearch(e.target.value)}
+            required
+            placeholder="Search"
+          />
+        </label>
 
+        {/* Filter dropdown */}
+        <select
+          className="border border-gray-400 p-2 mb-4 "
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="suspended">Suspended</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
       {/* Modal should be outside table */}
       <dialog ref={suspendRef} className="modal">
         <div className="modal-box">
@@ -163,22 +194,35 @@ const ManageUsers = () => {
           </thead>
 
           <tbody>
-            {users?.map((user, i) => (
+            {displayUsers?.map((user, i) => (
               <tr key={i}>
                 <th>{i + 1}</th>
-                <td>{user.name}</td>
+                <th>{user.name}</th>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
-                <td>{user.status}</td>
-                <td className="flex">
+                <td
+                  className={
+                    user.status === "active"
+                      ? "text-yellow-500"
+                      : user.status === "approved"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                >
+                  {user.status}
+                </td>
+                <td className="flex flex-wrap gap-3">
                   <button
-                    className="btn"
+                    className="btn bg-green-300 hover:bg-green-400"
                     onClick={() => handleApproveRole(user._id)}
                   >
                     Approve as Manager
                   </button>
 
-                  <button className="btn" onClick={() => handleSuspend(user)}>
+                  <button
+                    className="btn bg-red-300 hover:bg-red-400"
+                    onClick={() => handleSuspend(user)}
+                  >
                     suspend
                   </button>
                 </td>

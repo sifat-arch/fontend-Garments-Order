@@ -1,24 +1,45 @@
+
 import React from "react";
 import heroImg from "../../assets/heroImg.jpg";
 import { Link } from "react-router";
+import useTheme from "../../Hooks/useTheme";
 
 const HeroBanar = ({ logoUrl, readMoreLink }) => {
+  const { theme } = useTheme();
+  console.log(theme);
+
+  // Conditional classes based on theme
+  const leftBgClass =
+    theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-900 text-white";
+  const rightBgClass =
+    theme === "dark" ? "bg-gray-900 text-gray-200" : "bg-white text-gray-900";
+  const buttonClass =
+    theme === "dark"
+      ? "bg-yellow-600 hover:bg-yellow-500 text-gray-900"
+      : "bg-yellow-500 hover:bg-yellow-600 text-white";
+
   return (
     <div className="w-full mt-2">
-      <div className="flex flex-col lg:flex-row shadow-2xl rounded-lg overflow-hidden bg-white">
-        <div className="lg:w-1/2 p-8 lg:p-12 text-white bg-gray-900 relative flex items-center justify-center min-h-[300px]">
+      <div
+        className={`flex flex-col lg:flex-row shadow-2xl rounded-lg overflow-hidden`}
+      >
+        {/* Left side */}
+        <div
+          className={`lg:w-1/2 p-8 lg:p-12 relative flex items-center justify-center min-h-[300px] ${leftBgClass}`}
+        >
           <div
             className="absolute inset-0 bg-cover bg-center opacity-40"
             style={{ backgroundImage: `url(${heroImg})` }}
           ></div>
 
-          <div className="relative z-10">
+          <div className="relative z-10 text-center lg:text-left">
             <div className="mb-4">
-              {/*  */}
               <img
                 src={logoUrl}
                 alt="Logo"
-                className="h-8 w-auto filter invert"
+                className={
+                  theme === "dark" ? "h-8 w-auto filter invert" : "h-8 w-auto"
+                }
               />
             </div>
 
@@ -33,18 +54,23 @@ const HeroBanar = ({ logoUrl, readMoreLink }) => {
           </div>
         </div>
 
-        <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+        {/* Right side */}
+        <div
+          className={`lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center ${rightBgClass}`}
+        >
           <p className="text-sm font-semibold tracking-widest uppercase text-red-500 mb-2">
             SMALL BUSINESS TIPS
           </p>
 
-          <h2 className="text-3xl md:text-4xl lg:text-4xl font-extrabold leading-snug text-gray-900 mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-4xl font-extrabold leading-snug mb-8">
             Trendy looks + Perfect comfort: Explore premium collections made to
             elevate your everyday look
           </h2>
 
           <Link to="/all-products" href={readMoreLink} className="w-fit">
-            <button className="flex items-center justify-center px-6 py-3 font-semibold text-white font-bold bg-yellow-500 hover:bg-yellow-600 cursor-pointer transition duration-300 rounded-lg">
+            <button
+              className={`flex items-center justify-center px-6 py-3 font-semibold font-bold rounded-lg transition duration-300 ${buttonClass}`}
+            >
               Our Products
               <svg
                 className="w-4 h-4 ml-2"

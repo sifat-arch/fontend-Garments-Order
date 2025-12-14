@@ -4,9 +4,11 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
+import useTheme from "../../../Hooks/useTheme";
 
 const PendingOrders = () => {
   const axiosSecure = useAxiosSecure();
+  const { theme } = useTheme();
   const { user } = useAuth();
   const { data: orders = [], refetch } = useQuery({
     queryKey: ["orders"],
@@ -101,7 +103,9 @@ const PendingOrders = () => {
                       ""
                     ) : (
                       <button
-                        className="btn bg-green-300 hover:bg-green-400"
+                        className={`btn bg-green-300 hover:bg-green-400 ${
+                          theme === "dark" && "text-black"
+                        }`}
                         onClick={() => handleApprove(order._id)}
                       >
                         Approve
@@ -112,7 +116,9 @@ const PendingOrders = () => {
                       ""
                     ) : (
                       <button
-                        className="btn  bg-red-300 hover:bg-red-400"
+                        className={`btn  bg-red-300 hover:bg-red-400 ${
+                          theme === "dark" && "text-black"
+                        }`}
                         onClick={() => handleReject(order._id)}
                       >
                         Reject
@@ -120,8 +126,10 @@ const PendingOrders = () => {
                     )}
 
                     <Link
-                      className="btn  bg-yellow-300 hover:bg-yellow-400"
-                      to="/dashboard/order-details"
+                      className={`btn  bg-yellow-300 hover:bg-yellow-400 ${
+                        theme === "dark" && "text-black"
+                      }`}
+                      to={`/dashboard/order-details/${order._id}`}
                     >
                       View
                     </Link>

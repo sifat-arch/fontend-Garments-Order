@@ -21,8 +21,8 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 bg-gray-50 my-5">
-      <h2 className="text-4xl font-bold text-center mb-12">
+    <section className="py-20 bg-gray-50 dark:bg-gray-900 my-5">
+      <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
         <span className="text-yellow-400">How</span> It Works
       </h2>
 
@@ -33,15 +33,17 @@ export default function HowItWorks() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.2 }}
-            className="bg-white rounded-2xl shadow-lg p-8 text-center border border-indigo-100 
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center border border-indigo-100 dark:border-gray-700 
                        hover:-translate-y-2 hover:shadow-xl transition transform"
           >
-            <div className="mx-auto w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+            <div className="mx-auto w-16 h-16 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mb-4">
               {step.icon}
             </div>
 
-            <h3 className="text-xl font-semibold">{step.title}</h3>
-            <p class="text-gray-600 mt-2">{step.desc}</p>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {step.title}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">{step.desc}</p>
 
             <div className="mt-6 text-yellow-600 font-bold text-lg">
               0{i + 1}

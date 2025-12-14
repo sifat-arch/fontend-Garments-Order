@@ -30,6 +30,7 @@ import Profile from "../pages/Dashboard/BuyerDashboard/Profile";
 import AdminOnlyRoute from "./AdminOnlyRoute";
 import ManagerOnlyRoute from "./ManagerOnlayRoute";
 import BuyerOnlyRoute from "./BuyerOnlyRoute";
+import NotFoundPage from "../pages/sidepages/NotFountPage";
 
 const router = createBrowserRouter([
   {
@@ -124,7 +125,7 @@ const router = createBrowserRouter([
         element: <ProductUpdate />,
       },
       {
-        path: "order-details",
+        path: "order-details/:id",
         element: <OrderDetails />,
       },
 
@@ -196,6 +197,10 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFoundPage,
   },
 ]);
 

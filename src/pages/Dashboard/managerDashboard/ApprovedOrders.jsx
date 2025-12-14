@@ -78,7 +78,7 @@ const ApprovedOrders = () => {
                   </td>
                   <td className="flex flex-wrap gap-3">
                     <button
-                      className="btn bg-green-300 hover:bg-green-400"
+                      className="btn bg-green-300 hover:bg-green-400 text-black"
                       onClick={() => {
                         setTrackingId(order._id);
                         addModelRef.current.showModal();
@@ -102,7 +102,7 @@ const ApprovedOrders = () => {
                               </label>
                               <select
                                 {...register("status", { required: true })}
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                               >
                                 <option value="Shipped">Shipped</option>
                               </select>
@@ -117,7 +117,7 @@ const ApprovedOrders = () => {
                                 type="text"
                                 placeholder="Enter location"
                                 {...register("location")}
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-blue-500"
                               />
                             </div>
 
@@ -129,14 +129,14 @@ const ApprovedOrders = () => {
                               <textarea
                                 placeholder="Add a note..."
                                 {...register("note")}
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none h-24"
+                                className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 resize-none h-24"
                               />
                             </div>
 
                             {/* Submit Button */}
                             <button
                               type="submit"
-                              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-colors duration-200"
+                              className="w-full py-3 bg-yellow-600 text-white font-semibold rounded-lg shadow hover:bg-yellow-700 transition-colors duration-200 text-bl"
                             >
                               Add Tracking
                             </button>
@@ -152,7 +152,7 @@ const ApprovedOrders = () => {
                     </dialog>
 
                     <Link
-                      className="btn bg-yellow-300 hover:bg-yellow-400"
+                      className="btn bg-yellow-300 hover:bg-yellow-400 text-black"
                       to={`/dashboard/view-trackings/${order._id}`}
                     >
                       View Tracking

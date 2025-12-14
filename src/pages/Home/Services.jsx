@@ -161,14 +161,14 @@ const Services = () => {
   ];
 
   return (
-    <div className="bg-white py-16 sm:py-24">
+    <div className="bg-white dark:bg-gray-900 py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 md:mb-16">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 text-center md:text-left">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 text-center md:text-left">
             <span className="text-yellow-400">We</span> Offer Comprehensive
             Garment Solutions
           </h1>
-          <p className="mt-4 text-xl text-gray-500 text-center md:text-left max-w-2xl mx-auto md:mx-0">
+          <p className="mt-4 text-xl text-gray-500 dark:text-gray-300 text-center md:text-left max-w-2xl mx-auto md:mx-0">
             Driving efficiency and ethical standards in modern textile
             manufacturing.
           </p>
@@ -181,19 +181,21 @@ const Services = () => {
               className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 p-4"
             >
               <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-50">
+                <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-50 dark:bg-blue-900">
                   {service.icon}
                 </div>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   {service.title}
                 </h3>
-                <p className="text-base text-gray-600">{service.description}</p>
+                <p className="text-base text-gray-600 dark:text-gray-300">
+                  {service.description}
+                </p>
                 <a
                   href={service.link}
-                  className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition duration-150"
+                  className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition duration-150"
                 >
                   LEARN MORE
                   <svg

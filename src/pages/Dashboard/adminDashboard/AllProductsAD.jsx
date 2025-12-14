@@ -71,7 +71,6 @@ const AllProductsAD = () => {
       });
     }
   };
-  console.log(products);
 
   return (
     <div>
@@ -122,13 +121,13 @@ const AllProductsAD = () => {
                   {/* <th>{product.}</th> */}
                   <th className="flex gap-2">
                     <button
-                      className="btn"
+                      className="btn bg-yellow-300 hover:bg-amber-400"
                       onClick={() => handleUpdate(product)}
                     >
                       Update
                     </button>
                     <button
-                      className="btn"
+                      className="btn bg-red-300 hover:bg-red-400"
                       onClick={() => handleDelete(product._id)}
                     >
                       Delete

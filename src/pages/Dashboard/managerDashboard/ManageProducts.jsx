@@ -4,11 +4,13 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
+import useTheme from "../../../Hooks/useTheme";
 const ManageProducts = () => {
   const axiosSecure = useAxiosSecure();
 
   const navigate = useNavigate();
   const [searchText, setSearch] = useState("");
+  const { theme } = useTheme();
   const {
     loading,
     data: products = [],
@@ -130,7 +132,9 @@ const ManageProducts = () => {
                   </td>
                   <td className="flex gap-2">
                     <button
-                      className="btn bg-amber-300 hover:bg-amber-400"
+                      className={`btn bg-amber-300 hover:bg-amber-400 ${
+                        theme === "dark" && "text-black"
+                      }`}
                       onClick={() => handleUpdate(product)}
                     >
                       Updata
