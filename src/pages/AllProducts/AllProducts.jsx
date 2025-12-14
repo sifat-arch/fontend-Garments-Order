@@ -4,6 +4,7 @@ import React from "react";
 import useAxios from "../../Hooks/useAxios";
 import ProductCard from "../../components/ProductCard";
 import { useState } from "react";
+import Loading from "../../components/Loading";
 
 const AllProducts = () => {
   const axiosIn = useAxios();
@@ -11,7 +12,7 @@ const AllProducts = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const limit = 10;
-  const { data: products = [] } = useQuery({
+  const { loading, data: products = [] } = useQuery({
     queryKey: ["products", currentPage],
     queryFn: async () => {
       const res = await axiosIn.get(
@@ -23,6 +24,10 @@ const AllProducts = () => {
       return res?.data.result;
     },
   });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>

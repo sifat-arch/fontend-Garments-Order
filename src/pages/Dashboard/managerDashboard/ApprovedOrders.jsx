@@ -4,21 +4,25 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
 
 const ApprovedOrders = () => {
   const [trackingId, setTrackingId] = useState(null);
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const addModelRef = useRef();
   const { register, handleSubmit, reset } = useForm();
 
   const { data: orders = [] } = useQuery({
-    queryKey: ["orders"],
+    queryKey: ["orders", user],
     queryFn: async () => {
-      const res = await axiosSecure.get("/orders");
+      const res = await axiosSecure.get(`/orders?email=samad@gmail.com`);
 
       return res.data;
     },
   });
+
+  console.log("samad", orders);
 
   const onSetTracking = (data) => {
     console.log(data);

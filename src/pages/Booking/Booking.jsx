@@ -371,6 +371,7 @@ const OrderForm = () => {
         orderQuantity: data.orderQuantity,
         productId: productData._id,
         email: user.email,
+        managersEmail: String(productData?.managersEmail),
         user: user?.displayName,
       };
 
@@ -390,6 +391,7 @@ const OrderForm = () => {
         orderQuantity: Number(data.orderQuantity),
         productId: String(productData._id),
         email: String(user?.email),
+        managersEmail: String(productData?.managersEmail),
         user: String(user?.displayName || ""),
         paymentStatus: "unpaid",
       };

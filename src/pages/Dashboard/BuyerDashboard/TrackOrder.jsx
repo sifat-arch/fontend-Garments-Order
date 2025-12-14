@@ -12,7 +12,7 @@ const TrackOrder = () => {
     queryKey: ["orders", user],
     enabled: !loading && !!user,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/orders?email=${user?.email}`);
+      const res = await axiosSecure.get(`/ordersBuyer?email=${user?.email}`);
       return res.data;
     },
   });
@@ -20,7 +20,7 @@ const TrackOrder = () => {
   return (
     <div className="min-h-screen p-4 md:p-8 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <h2 className="text-4xl font-bold mb-6 text-center md:text-left">
-        <span className="text-yellow-400">My</span> Orders
+        <span className="text-yellow-400">Track</span> Orders
       </h2>
 
       <div className="overflow-x-auto rounded-lg shadow-lg">

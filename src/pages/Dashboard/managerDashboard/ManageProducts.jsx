@@ -5,11 +5,13 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
 import useTheme from "../../../Hooks/useTheme";
+import useAuth from "../../../Hooks/useAuth";
 const ManageProducts = () => {
   const axiosSecure = useAxiosSecure();
 
   const navigate = useNavigate();
   const [searchText, setSearch] = useState("");
+  const { user } = useAuth();
   const { theme } = useTheme();
   const {
     loading,
@@ -18,7 +20,9 @@ const ManageProducts = () => {
   } = useQuery({
     queryKey: ["products", searchText],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/products?searchText=${searchText}`);
+      const res = await axiosSecure.get(
+        `/products?searchText=${searchText}&email=${user.email}`
+      );
 
       return res.data;
     },
